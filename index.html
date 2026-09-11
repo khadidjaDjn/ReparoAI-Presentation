@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReparoAI — Intelligent Fault Diagnosis</title>
+<style>
+
+:root{
+  --bg:#fbfcff;
+  --ink:#172033;
+  --muted:#68738a;
+  --cyan:#35c9d5;      --cyan-dark:#149aa7;
+  --violet:#8c7cf5;    --violet-dark:#6757d8;
+  --coral:#ff8f86;     --coral-dark:#e66d64;
+  --mint:#69d6ae;      --mint-dark:#2fae82;
+  --amber:#f7cf62;     --amber-dark:#c99a1f;
+  --line:#e9edf5;
+  --shadow:0 18px 50px rgba(40,54,85,.10);
+  --radius:22px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:#0B0F1F;font-family:Inter,'Segoe UI',Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+
+#stageWrap{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 20% 20%, rgba(140,124,245,.15), transparent 45%),
+             radial-gradient(circle at 80% 80%, rgba(53,201,213,.12), transparent 45%),
+             #0B0F1F;
+  overflow:hidden;
+}
+
+#stage{
+  width:1280px;height:720px;position:relative;flex:none;
+  background:var(--bg);border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.55), 0 4px 24px rgba(0,0,0,.3);
+}
+
+.presentation{position:relative;width:100%;height:100%;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(140,124,245,.10), transparent 25%),
+    radial-gradient(circle at 5% 90%, rgba(53,201,213,.08), transparent 25%),
+    var(--bg);
+}
+
+.slide{
+  position:absolute;inset:0;padding:58px 88px;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateX(30px) scale(.98);pointer-events:none;
+  transition:opacity .5s ease, transform .6s cubic-bezier(.2,.75,.2,1);
+}
+.slide.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
+
+.slide-number{position:absolute;top:24px;right:44px;font-size:11px;color:#a0a8b8;letter-spacing:.1em;}
+.brand{position:absolute;left:44px;top:24px;font-weight:800;letter-spacing:-.03em;font-size:15px;z-index:5;}
+.brand span{color:var(--cyan-dark);}
+
+.orb{position:absolute;border-radius:50%;pointer-events:none;}
+.orb.one{width:110px;height:110px;right:7%;top:12%;background:rgba(140,124,245,.10);animation:float 6s ease-in-out infinite;}
+.orb.two{width:70px;height:70px;left:5%;bottom:10%;background:rgba(53,201,213,.12);animation:float 7s ease-in-out infinite reverse;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan-dark);margin-bottom:14px;}
+.eyebrow::before{content:"";width:22px;height:3px;border-radius:20px;background:var(--cyan);}
+
+h1{font-size:60px;line-height:1.02;margin:0 0 18px;letter-spacing:-.03em;}
+h2{font-size:36px;line-height:1.08;margin:0 0 14px;letter-spacing:-.02em;}
+h3{margin:0 0 8px;font-size:18px;}
+p{color:var(--muted);line-height:1.55;font-size:14px;}
+.highlight{color:var(--violet-dark);}
+strong{color:var(--ink);}
+
+/* ---------- icons ---------- */
+.icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:13px;background:#eafffc;color:var(--cyan-dark);}
+.icon svg{width:21px;height:21px;}
+.icon.violet{background:#f0edff;color:var(--violet-dark);}
+.icon.coral{background:#fff0ee;color:var(--coral-dark);}
+.icon.mint{background:#effff9;color:var(--mint-dark);}
+.icon.amber{background:#fffaea;color:var(--amber-dark);}
+
+/* ---------- title ---------- */
+.title-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:center;}
+.title-sub{max-width:640px;font-size:16px;color:var(--muted);}
+.authors{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.author{padding:9px 15px;border:1px solid var(--line);background:rgba(255,255,255,.8);border-radius:30px;box-shadow:0 8px 25px rgba(40,54,85,.05);font-weight:600;font-size:13px;}
+.title-visual{height:300px;display:flex;align-items:center;justify-content:center;position:relative;}
+.board{width:240px;height:180px;border-radius:24px;background:linear-gradient(135deg,#efffff,#eef0ff);border:1px solid #dce5f3;box-shadow:var(--shadow);position:relative;animation:boardFloat 5s ease-in-out infinite;}
+@keyframes boardFloat{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-13px) rotate(2deg);}}
+.chip2{position:absolute;background:white;border:2px solid var(--violet);border-radius:9px;}
+.chip2.a{width:65px;height:45px;top:40px;left:40px;}
+.chip2.b{width:48px;height:36px;right:40px;bottom:45px;border-color:var(--cyan);}
+.trace{position:absolute;height:3px;border-radius:20px;background:var(--cyan);opacity:.75;animation:tracePulse 2.4s ease-in-out infinite;}
+.trace.t1{width:90px;left:102px;top:62px;}
+.trace.t2{width:75px;left:82px;top:118px;background:var(--coral);animation-delay:.3s;}
+.trace.t3{width:62px;right:62px;top:90px;background:var(--mint);animation-delay:.6s;}
+@keyframes tracePulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+.inst-line{display:flex;gap:16px;font-size:11.5px;color:#a1a8b7;margin-top:20px;}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+.card{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);opacity:0;transform:translateY(16px);animation:cardIn .6s cubic-bezier(.2,.8,.2,1) forwards;}
+.card:nth-child(1){animation-delay:.05s;}
+.card:nth-child(2){animation-delay:.15s;}
+.card:nth-child(3){animation-delay:.25s;}
+.card:nth-child(4){animation-delay:.35s;}
+@keyframes cardIn{to{opacity:1;transform:translateY(0);}}
+
+/* ---------- problem ---------- */
+.problem-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center;}
+.problem-statement{font-size:19px;line-height:1.4;max-width:520px;}
+.symptom{padding:13px 16px;border-radius:16px;background:white;border:1px solid var(--line);margin-bottom:10px;box-shadow:0 10px 25px rgba(40,54,85,.05);position:relative;overflow:hidden;font-size:13px;opacity:0;transform:translateX(14px);animation:symIn .5s ease forwards;}
+.symptom:nth-child(1){animation-delay:.05s;}
+.symptom:nth-child(2){animation-delay:.15s;}
+.symptom:nth-child(3){animation-delay:.25s;}
+.symptom:nth-child(4){animation-delay:.35s;}
+@keyframes symIn{to{opacity:1;transform:translateX(0);}}
+.symptom::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--coral);}
+
+/* ---------- flow ---------- */
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.flow-box{padding:13px 18px;border-radius:16px;background:white;border:1px solid var(--line);box-shadow:0 10px 30px rgba(40,54,85,.07);font-weight:700;font-size:12.5px;position:relative;}
+.flow-box.cyan{border-color:rgba(53,201,213,.4);}
+.flow-box.violet{border-color:rgba(140,124,245,.4);}
+.flow-box small{display:block;font-weight:400;color:var(--muted);font-size:10.5px;margin-top:2px;}
+.arrow{color:#9da6b7;font-size:19px;}
+
+/* ---------- research questions ---------- */
+.rq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;max-width:920px;}
+.rq{padding:17px;border-radius:18px;background:white;border:1px solid var(--line);box-shadow:0 10px 30px rgba(40,54,85,.05);display:grid;grid-template-columns:48px 1fr;gap:13px;align-items:center;opacity:0;transform:translateY(14px);animation:cardIn .55s ease forwards;}
+.rq:nth-child(1){animation-delay:.05s;} .rq:nth-child(2){animation-delay:.13s;}
+.rq:nth-child(3){animation-delay:.21s;} .rq:nth-child(4){animation-delay:.29s;}
+.rq-num{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;background:#f0edff;color:var(--violet-dark);}
+
+/* ---------- bento / stats ---------- */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px;}
+.bento .wide{grid-column:span 2;}
+.bento .full{grid-column:span 4;}
+.big-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;}
+.stat{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);opacity:0;transform:translateY(14px);animation:cardIn .55s ease forwards;}
+.stat:nth-child(1){animation-delay:.05s;} .stat:nth-child(2){animation-delay:.15s;} .stat:nth-child(3){animation-delay:.25s;} .stat:nth-child(4){animation-delay:.35s;}
+.stat-number{font-size:38px;font-weight:850;letter-spacing:-.03em;line-height:1;}
+.stat-label{color:var(--muted);margin-top:8px;font-size:12.5px;}
+
+/* ---------- pipeline ---------- */
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;align-items:center;margin-top:26px;}
+.pipeline.p4{grid-template-columns:repeat(4,1fr);}
+.pipeline-item{min-height:120px;padding:16px;border-radius:20px;background:white;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;text-align:center;opacity:0;transform:translateY(18px);animation:revealUp .6s cubic-bezier(.2,.8,.2,1) forwards;}
+.pipeline-item:nth-child(2){animation-delay:.1s;} .pipeline-item:nth-child(3){animation-delay:.2s;}
+.pipeline-item:nth-child(4){animation-delay:.3s;} .pipeline-item:nth-child(5){animation-delay:.4s;}
+@keyframes revealUp{to{opacity:1;transform:translateY(0);}}
+.pipeline-item strong{font-size:13px;}
+.pipeline-item small{font-size:11px;color:var(--muted);}
+.pipeline-item .icon{margin:0 auto 10px;}
+
+/* ---------- graph ---------- */
+.graph{width:100%;height:330px;position:relative;margin-top:8px;}
+.graph svg{width:100%;height:100%;}
+.node-text{font-weight:700;font-size:14px;}
+.graph-pulse{animation:pulse 2.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.7;}50%{opacity:1;}}
+
+/* ---------- architecture ---------- */
+.architecture{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:16px;align-items:center;margin-top:20px;}
+.arch-column{display:flex;flex-direction:column;gap:11px;}
+.arch-box{background:white;border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 12px 30px rgba(40,54,85,.07);text-align:center;position:relative;font-size:12.5px;}
+.arch-box .icon{margin:0 auto 8px;}
+.arch-box.main{min-height:150px;display:flex;flex-direction:column;justify-content:center;border-color:rgba(140,124,245,.35);}
+.arch-box small{display:block;color:var(--muted);margin-top:5px;}
+.route{height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet));border-radius:20px;position:relative;}
+.route::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--coral);position:absolute;top:-3px;left:0;animation:travel 2.2s linear infinite;}
+@keyframes travel{to{left:calc(100% - 9px);}}
+
+/* ---------- two column ---------- */
+.two-column{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+.method{padding:20px;border-radius:22px;background:white;border:1px solid var(--line);box-shadow:var(--shadow);}
+.method-title{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.badge{padding:6px 10px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;}
+.badge.cyan{background:#e7fbfd;color:var(--cyan-dark);}
+.badge.violet{background:#eeeaff;color:var(--violet-dark);}
+
+/* ---------- chart ---------- */
+.chart-container{background:white;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow);margin-top:16px;}
+.chart{width:100%;height:230px;}
+.chart-bar{transform-origin:bottom;animation:chartGrow .8s cubic-bezier(.2,.8,.2,1) both;}
+.chart-bar:nth-child(2){animation-delay:.1s;} .chart-bar:nth-child(3){animation-delay:.2s;}
+.chart-bar:nth-child(4){animation-delay:.3s;} .chart-bar:nth-child(5){animation-delay:.4s;} .chart-bar:nth-child(6){animation-delay:.5s;}
+@keyframes chartGrow{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+.chart-label{opacity:0;animation:fadeIn .5s ease .6s forwards;}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* ---------- winner ---------- */
+.winner{padding:22px;border-radius:24px;background:linear-gradient(135deg,#f1fffb,#f3f0ff);border:1px solid #dfe9e8;opacity:0;transform:translateY(14px);animation:cardIn .55s ease forwards;}
+.winner-number{font-size:52px;font-weight:900;line-height:.9;letter-spacing:-.04em;color:var(--violet-dark);}
+
+/* ---------- app mockup ---------- */
+.app-window{width:100%;height:300px;border-radius:20px;background:#f7f8fc;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;}
+.app-top{height:36px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 14px;gap:6px;}
+.dot2{width:7px;height:7px;border-radius:50%;background:#d9dce5;}
+.app-body{display:grid;grid-template-columns:132px 1fr;height:calc(100% - 36px);}
+.sidebar{background:white;border-right:1px solid var(--line);padding:14px;}
+.side-item{padding:8px;border-radius:9px;margin-bottom:5px;font-size:10.5px;color:var(--muted);}
+.side-item.active{background:#e9fbfc;color:var(--cyan-dark);font-weight:700;}
+.chat2{padding:16px;}
+.message{max-width:80%;padding:10px 13px;border-radius:13px;font-size:10.5px;margin-bottom:10px;}
+.user-msg{background:white;border:1px solid var(--line);}
+.ai-msg{background:linear-gradient(135deg,#edfdfb,#f2efff);margin-left:auto;}
+.citation{display:inline-block;margin-top:6px;padding:4px 7px;background:white;border-radius:7px;color:var(--violet-dark);font-size:9px;}
+.screen-chips{display:flex;gap:10px;margin-top:14px;}
+.screen-chip{flex:1;padding:11px 13px;border-radius:14px;background:white;border:1px solid var(--line);font-size:11px;}
+.screen-chip b{display:block;font-size:12px;margin-bottom:2px;}
+
+/* ---------- conclusion ---------- */
+.conclusion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px;}
+.conclusion-card{padding:18px;background:white;border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow);opacity:0;transform:translateY(14px);animation:cardIn .55s ease forwards;}
+.conclusion-card:nth-child(1){animation-delay:.05s;} .conclusion-card:nth-child(2){animation-delay:.15s;} .conclusion-card:nth-child(3){animation-delay:.25s;}
+.conclusion-card .number{font-size:12px;font-weight:800;color:var(--cyan-dark);margin-bottom:10px;letter-spacing:.05em;}
+.conclusion-card h3{font-size:15px;}
+.conclusion-card p{font-size:12px;}
+.lf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.lf-col{padding:16px 18px;background:white;border-radius:18px;border:1px solid var(--line);}
+.lf-col h4{margin:0 0 6px;font-size:13px;}
+.lf-col p{font-size:11.5px;}
+
+/* ---------- nav ---------- */
+.controls{position:absolute;bottom:24px;right:40px;display:flex;gap:7px;z-index:50;}
+.control{width:34px;height:34px;border-radius:11px;background:white;border:1px solid var(--line);box-shadow:0 8px 25px rgba(40,54,85,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);user-select:none;font-size:14px;}
+.control:hover{color:var(--violet-dark);}
+.progress{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--coral));transition:width .5s ease;z-index:40;}
+.hint{position:absolute;bottom:29px;left:40px;font-size:10px;color:#a1a8b7;}
+
+</style>
+</head>
+<body>
+
+<div id="stageWrap">
+<div id="stage">
+<div class="presentation">
+
+<div class="brand"><span>Reparo</span>AI</div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<!-- 01 TITLE -->
+<section class="slide active">
+<div class="slide-number">01 / 22</div>
+<div class="title-layout">
+  <div>
+    <div class="eyebrow">Engineering Thesis Defense</div>
+    <h1>Intelligent Fault<br><span class="highlight">Diagnosis</span> for Electronics</h1>
+    <p class="title-sub">Design of an Intelligent Assistant for Fault Diagnosis in Electronic Boards and Modules — grounded in retrieval and a knowledge graph.</p>
+    <div class="authors">
+      <div class="author">Chaima Bechetella</div>
+      <div class="author">Khadidja Djennane</div>
+    </div>
+    <p style="margin-top:18px;font-size:12.5px;">Supervised by Dr. Djenadi Ali · Dr. Mammasse Amine</p>
+    <div class="inst-line"><span>ESTIN Bejaia</span><span>AI &amp; Data Sciences</span><span>2025 / 2026</span></div>
+  </div>
+  <div class="title-visual">
+    <div class="board">
+      <div class="chip2 a"></div><div class="chip2 b"></div>
+      <div class="trace t1"></div><div class="trace t2"></div><div class="trace t3"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 02 MOTIVATION -->
+<section class="slide">
+<div class="slide-number">02 / 22</div>
+<div class="eyebrow">01 · Motivation</div>
+<h2>When electronics fail,<br><span class="highlight">diagnosis comes first.</span></h2>
+<div class="cards">
+  <div class="card"><div class="icon" data-icon="bolt"></div><h3>Failures are ambiguous</h3><p>A single symptom can correspond to several possible causes or components.</p></div>
+  <div class="card"><div class="icon violet" data-icon="puzzle"></div><h3>Knowledge is fragmented</h3><p>Diagnostic knowledge is scattered across repair guides, videos and technical resources.</p></div>
+  <div class="card"><div class="icon coral" data-icon="clock"></div><h3>Experts spend time searching</h3><p>Technicians consult multiple sources before deciding what to test or repair.</p></div>
+</div>
+</section>
+
+<!-- 03 PROBLEM -->
+<section class="slide">
+<div class="slide-number">03 / 22</div>
+<div class="eyebrow">02 · Problem</div>
+<div class="problem-grid">
+  <div>
+    <h2>The same symptom<br>can hide <span class="highlight">different faults.</span></h2>
+    <p class="problem-statement">Natural-language descriptions are often incomplete, informal and ambiguous. The system must connect what the technician says with the underlying diagnostic knowledge — mostly consumer electronics, since the corpus is 98% phone-related.</p>
+  </div>
+  <div>
+    <div class="symptom">"The phone doesn't turn on."</div>
+    <div class="symptom">"The screen stays black."</div>
+    <div class="symptom">"It stopped charging."</div>
+    <div class="symptom">"No response after pressing power."</div>
+  </div>
+</div>
+</section>
+
+<!-- 04 WHY NOT LLM -->
+<section class="slide">
+<div class="slide-number">04 / 22</div>
+<div class="eyebrow">03 · Why not a standalone LLM?</div>
+<h2>Fluent answers are not necessarily<br><span class="highlight">grounded answers.</span></h2>
+<div class="flow">
+  <div class="flow-box">Technician query</div><div class="arrow">&rarr;</div>
+  <div class="flow-box violet">Standalone LLM</div><div class="arrow">&rarr;</div>
+  <div class="flow-box">Fluent response</div>
+</div>
+<div class="cards" style="margin-top:34px;">
+  <div class="card"><div class="icon coral" data-icon="alert"></div><h3>Hallucination</h3><p>The model can generate plausible but unsupported diagnostic information.</p></div>
+  <div class="card"><div class="icon violet" data-icon="book"></div><h3>Knowledge limitation</h3><p>The model does not directly access device-specific repair documentation at inference time.</p></div>
+  <div class="card"><div class="icon mint" data-icon="check"></div><h3>Grounding is needed</h3><p>External repair knowledge must constrain the diagnostic decision.</p></div>
+</div>
+</section>
+
+<!-- 05 RESEARCH QUESTIONS -->
+<section class="slide">
+<div class="slide-number">05 / 22</div>
+<div class="eyebrow">04 · Research questions</div>
+<h2>From language generation<br>to <span class="highlight">knowledge-grounded diagnosis.</span></h2>
+<div class="rq-grid">
+  <div class="rq"><div class="rq-num">RQ1</div><div><strong>Knowledge construction</strong><p style="margin:4px 0 0;font-size:12px;">How can scattered repair knowledge be transformed into structured diagnostic cases?</p></div></div>
+  <div class="rq"><div class="rq-num">RQ2</div><div><strong>Retrieval effectiveness</strong><p style="margin:4px 0 0;font-size:12px;">How effectively can Hybrid RAG and GraphRAG retrieve relevant evidence?</p></div></div>
+  <div class="rq"><div class="rq-num">RQ3</div><div><strong>Grounding &amp; faithfulness</strong><p style="margin:4px 0 0;font-size:12px;">Are generated diagnoses supported by retrieved evidence?</p></div></div>
+  <div class="rq"><div class="rq-num">RQ4</div><div><strong>End-to-end performance</strong><p style="margin:4px 0 0;font-size:12px;">How do retrieval strategy and LLM choice affect diagnostic accuracy?</p></div></div>
+</div>
+</section>
+
+<!-- 06 CONTRIBUTIONS -->
+<section class="slide">
+<div class="slide-number">06 / 22</div>
+<div class="eyebrow">05 · Contributions</div>
+<h2>What this thesis <span class="highlight">delivers.</span></h2>
+<div class="bento">
+  <div class="stat wide"><div class="stat-number" style="color:var(--violet-dark);" data-count="2272" data-format="int">0</div><div class="stat-label">diagnostic cases extracted into a normalised corpus</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--cyan-dark);" data-count="1" data-format="int">0</div><div class="stat-label">knowledge graph linking devices, symptoms and diagnoses</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--coral-dark);" data-count="2" data-format="int">0</div><div class="stat-label">retrieval strategies designed and compared</div></div>
+  <div class="stat full"><div class="stat-number" style="font-size:26px;color:var(--mint-dark);">3-dimensional evaluation</div><div class="stat-label">retrieval quality, diagnosis accuracy and faithfulness, across three LLMs</div></div>
+</div>
+</section>
+
+<!-- 07 PROPOSED APPROACH -->
+<section class="slide">
+<div class="slide-number">07 / 22</div>
+<div class="eyebrow">06 · Proposed approach</div>
+<h2>One assistant.<br><span class="highlight">Two grounding strategies.</span></h2>
+<div class="architecture">
+  <div class="arch-column">
+    <div class="arch-box"><div class="icon" data-icon="doc"></div><strong>User query</strong><small>Natural-language fault description</small></div>
+    <div class="route"></div>
+    <div class="arch-box"><div class="icon" data-icon="search"></div><strong>Query processing</strong><small>Extract and normalize symptoms</small></div>
+  </div>
+  <div class="arch-box main"><div class="icon violet" data-icon="graph" style="margin:0 auto 10px;width:48px;height:48px;"></div><h3>Retrieval layer</h3><p style="font-size:12px;">Hybrid RAG<br>or<br>GraphRAG</p></div>
+  <div class="arch-column">
+    <div class="arch-box"><div class="icon mint" data-icon="book"></div><strong>Evidence</strong><small>Diagnostic knowledge</small></div>
+    <div class="route"></div>
+    <div class="arch-box"><div class="icon coral" data-icon="robot"></div><strong>Grounded LLM</strong><small>Diagnosis + repair steps</small></div>
+  </div>
+</div>
+</section>
+
+<!-- 08 CORPUS -->
+<section class="slide">
+<div class="slide-number">08 / 22</div>
+<div class="eyebrow">07 · Knowledge construction</div>
+<h2>Building the diagnostic<br><span class="highlight">knowledge foundation.</span></h2>
+<div class="pipeline">
+  <div class="pipeline-item"><div class="icon" data-icon="doc"></div><strong>iFixit</strong><small>2,126 guides loaded</small></div>
+  <div class="pipeline-item"><div class="icon violet" data-icon="doc"></div><strong>YouTube</strong><small>Repair transcripts</small></div>
+  <div class="pipeline-item"><div class="icon coral" data-icon="robot"></div><strong>LLM extraction</strong><small>Symptoms · causes · repair</small></div>
+  <div class="pipeline-item"><div class="icon mint" data-icon="check"></div><strong>Validation</strong><small>Schema + manual reference</small></div>
+  <div class="pipeline-item"><div class="icon amber" data-icon="folder"></div><strong>Diagnostic corpus</strong><small>2,272 cases</small></div>
+</div>
+<div class="big-stats">
+  <div class="stat"><div class="stat-number" style="color:var(--violet-dark);" data-count="2008" data-format="int">0</div><div class="stat-label">iFixit cases &mdash; 94.45% extraction success</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--cyan-dark);" data-count="264" data-format="int">0</div><div class="stat-label">YouTube-derived cases</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--coral-dark);" data-count="2272" data-format="int">0</div><div class="stat-label">normalised diagnostic cases, total</div></div>
+</div>
+</section>
+
+<!-- 09 DATASET STATS -->
+<section class="slide">
+<div class="slide-number">09 / 22</div>
+<div class="eyebrow">08 · Dataset at a glance</div>
+<h2>How rich is <span class="highlight">each diagnostic case?</span></h2>
+<div class="big-stats">
+  <div class="stat"><div class="stat-number" style="color:var(--violet-dark);">2.97</div><div class="stat-label">mean symptoms/case, iFixit (median 3) &mdash; broader plausible space inferred from a full repair procedure</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--cyan-dark);">1.58</div><div class="stat-label">mean symptoms/case, YouTube &mdash; 61% of cases report a single symptom</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--coral-dark);" data-count="13.4" data-decimals="1" data-suffix="%">0%</div><div class="stat-label">of iFixit records flagged low-confidence by the reverse-engineering pipeline</div></div>
+</div>
+</section>
+
+<!-- 10 KNOWLEDGE GRAPH -->
+<section class="slide">
+<div class="slide-number">10 / 22</div>
+<div class="eyebrow">09 · Knowledge graph</div>
+<h2>Turning repair knowledge into<br><span class="highlight">explicit relationships.</span></h2>
+<div class="graph">
+<svg viewBox="0 0 1000 330">
+  <line x1="500" y1="165" x2="230" y2="70" stroke="#b7c0d2" stroke-width="3"/>
+  <line x1="500" y1="165" x2="230" y2="260" stroke="#b7c0d2" stroke-width="3"/>
+  <line x1="500" y1="165" x2="800" y2="70" stroke="#b7c0d2" stroke-width="3"/>
+  <line x1="230" y1="260" x2="800" y2="70" stroke="#8c7cf5" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <circle r="7" fill="#ff8f86" class="graph-pulse"><animateMotion dur="3.4s" repeatCount="indefinite" path="M500 165 L230 260 L800 70 Z"/></circle>
+
+  <circle cx="500" cy="165" r="66" fill="#fff6e0" stroke="#f7cf62" stroke-width="3"/>
+  <text x="500" y="160" text-anchor="middle" class="node-text">Guide</text>
+  <text x="500" y="181" text-anchor="middle" fill="#68738a" font-size="12">repair record</text>
+
+  <circle cx="230" cy="70" r="52" fill="#e9fbfc" stroke="#35c9d5" stroke-width="3"/>
+  <text x="230" y="65" text-anchor="middle" class="node-text">Device</text>
+  <text x="230" y="86" text-anchor="middle" fill="#68738a" font-size="11">category, model</text>
+
+  <circle cx="230" cy="260" r="52" fill="#fff0ee" stroke="#ff8f86" stroke-width="3"/>
+  <text x="230" y="255" text-anchor="middle" class="node-text">Symptom</text>
+  <text x="230" y="276" text-anchor="middle" fill="#68738a" font-size="11">canonical tag</text>
+
+  <circle cx="800" cy="70" r="52" fill="#effff9" stroke="#69d6ae" stroke-width="3"/>
+  <text x="800" y="65" text-anchor="middle" class="node-text">Diagnosis</text>
+  <text x="800" y="86" text-anchor="middle" fill="#68738a" font-size="11">canonical tag</text>
+
+  <text x="345" y="105" fill="#68738a" font-size="11">FOR_DEVICE</text>
+  <text x="345" y="228" fill="#68738a" font-size="11">HAS_SYMPTOM</text>
+  <text x="665" y="105" fill="#68738a" font-size="11">HAS_DIAGNOSIS</text>
+  <text x="470" y="175" fill="#6757d8" font-size="10.5">CO_OCCURS_WITH (weighted, derived)</text>
+</svg>
+</div>
+<p style="text-align:center;font-size:13px;">Stored in <strong>Neo4j</strong>. Guide is the central node; <strong>CO_OCCURS_WITH</strong> is derived after ingestion and weighted by how many distinct guides link a symptom to a diagnosis.</p>
+</section>
+
+<!-- 11 SYSTEM ARCHITECTURE -->
+<section class="slide">
+<div class="slide-number">11 / 22</div>
+<div class="eyebrow">10 · System architecture</div>
+<h2>From a symptom<br>to an <span class="highlight">evidence-based diagnosis.</span></h2>
+<div class="architecture">
+  <div class="arch-column">
+    <div class="arch-box"><div class="icon" data-icon="person"></div><strong>Technician</strong><small>"My phone suddenly stopped charging."</small></div>
+    <div class="route"></div>
+    <div class="arch-box"><div class="icon" data-icon="search"></div><strong>Query processing</strong><small>Natural-language symptom</small></div>
+  </div>
+  <div class="arch-column">
+    <div class="arch-box"><strong>Hybrid RAG</strong><small>Dense + BM25, RRF + reranking</small></div>
+    <div class="arch-box"><strong>GraphRAG</strong><small>Symptom linking, graph traversal</small></div>
+    <div class="route"></div>
+    <div class="arch-box main"><div class="icon violet" data-icon="robot" style="margin:0 auto 8px;"></div><strong>LLM</strong><small>Evidence-grounded generation</small></div>
+  </div>
+  <div class="arch-column">
+    <div class="arch-box"><strong>Diagnosis</strong><small>Most likely fault</small></div>
+    <div class="arch-box"><strong>Repair steps</strong><small>Ordered procedure</small></div>
+    <div class="arch-box"><strong>Evidence</strong><small>Supporting guides</small></div>
+  </div>
+</div>
+</section>
+
+<!-- 12 HYBRID RAG -->
+<section class="slide">
+<div class="slide-number">12 / 22</div>
+<div class="eyebrow">11 · Retrieval strategy I</div>
+<h2>Hybrid RAG combines<br><span class="highlight">two views of relevance.</span></h2>
+<div class="two-column">
+  <div class="method">
+    <div class="method-title"><span class="badge cyan">Sparse</span><h3>BM25</h3></div>
+    <p>Strong at exact technical terms, model numbers, component names and error codes.</p>
+    <div class="flow"><div class="flow-box cyan">Query</div><div class="arrow">&rarr;</div><div class="flow-box">BM25</div></div>
+  </div>
+  <div class="method">
+    <div class="method-title"><span class="badge violet">Dense</span><h3>Embeddings</h3></div>
+    <p>Captures semantic similarity even when the query uses different wording (BGE-base).</p>
+    <div class="flow"><div class="flow-box violet">Query</div><div class="arrow">&rarr;</div><div class="flow-box">BGE</div></div>
+  </div>
+</div>
+<div class="flow" style="margin-top:20px;">
+  <div class="flow-box">Sparse ranking</div><div class="arrow">+</div>
+  <div class="flow-box">Dense ranking</div><div class="arrow">&rarr;</div>
+  <div class="flow-box violet">RRF</div><div class="arrow">&rarr;</div>
+  <div class="flow-box">Cross-encoder reranker</div>
+</div>
+</section>
+
+<!-- 13 GRAPHRAG -->
+<section class="slide">
+<div class="slide-number">13 / 22</div>
+<div class="eyebrow">12 · Retrieval strategy II</div>
+<h2>GraphRAG retrieves through<br><span class="highlight">relationships.</span></h2>
+<div class="flow">
+  <div class="flow-box">"Screen stays black"</div><div class="arrow">&rarr;</div>
+  <div class="flow-box violet">Symptom linking</div><div class="arrow">&rarr;</div>
+  <div class="flow-box cyan">CO_OCCURS_WITH traversal</div><div class="arrow">&rarr;</div>
+  <div class="flow-box">Ranked diagnoses</div>
+</div>
+<div class="graph" style="height:210px;">
+<svg viewBox="0 0 1000 210">
+  <line x1="160" y1="105" x2="400" y2="105" stroke="#b7c0d2" stroke-width="4"/>
+  <line x1="400" y1="105" x2="650" y2="55" stroke="#b7c0d2" stroke-width="4"/>
+  <line x1="400" y1="105" x2="650" y2="155" stroke="#b7c0d2" stroke-width="4"/>
+  <circle cx="160" cy="105" r="46" fill="#fff0ee" stroke="#ff8f86" stroke-width="3"/>
+  <text x="160" y="100" text-anchor="middle" class="node-text">Query</text>
+  <text x="160" y="119" text-anchor="middle" font-size="10.5" fill="#68738a">symptom</text>
+  <circle cx="400" cy="105" r="50" fill="#f0edff" stroke="#8c7cf5" stroke-width="4"/>
+  <text x="400" y="100" text-anchor="middle" class="node-text">Symptom</text>
+  <text x="400" y="119" text-anchor="middle" font-size="10.5" fill="#68738a">canonical</text>
+  <circle cx="650" cy="55" r="44" fill="#e9fbfc" stroke="#35c9d5" stroke-width="3"/>
+  <text x="650" y="51" text-anchor="middle" class="node-text" font-size="12">Diagnosis A</text>
+  <text x="650" y="68" text-anchor="middle" font-size="10" fill="#68738a">w = 12</text>
+  <circle cx="650" cy="155" r="44" fill="#effff9" stroke="#69d6ae" stroke-width="3"/>
+  <text x="650" y="151" text-anchor="middle" class="node-text" font-size="12">Diagnosis B</text>
+  <text x="650" y="168" text-anchor="middle" font-size="10" fill="#68738a">w = 4</text>
+</svg>
+</div>
+<p style="text-align:center;">Instead of asking the LLM to infer relationships from text, <strong>GraphRAG exposes explicit, weight-ranked diagnostic candidates.</strong></p>
+</section>
+
+<!-- 14 KG-ONLY MOTIVATION -->
+<section class="slide">
+<div class="slide-number">14 / 22</div>
+<div class="eyebrow">13 · Why go beyond raw co-occurrence</div>
+<h2>The raw signal alone<br><span class="highlight">isn't enough.</span></h2>
+<div class="two-column">
+  <div class="winner">
+    <div class="winner-number" data-count="34" data-suffix="%">0%</div>
+    <strong>Top-1 accuracy</strong>
+    <p>Best co-occurrence formula (conditional probability) over raw symptom-diagnosis edges.</p>
+  </div>
+  <div class="winner">
+    <div class="winner-number" data-count="50" data-suffix="%">0%</div>
+    <strong>Top-3 accuracy</strong>
+    <p>Ceiling set by the sparsity of the raw signal — not the choice of estimator.</p>
+  </div>
+</div>
+<p style="text-align:center;margin-top:18px;font-size:13px;">This motivated enriching graph traversal with <strong>semantic symptom embeddings</strong> — the full GraphRAG pipeline.</p>
+</section>
+
+<!-- 15 GENERATION -->
+<section class="slide">
+<div class="slide-number">15 / 22</div>
+<div class="eyebrow">14 · Evidence-grounded generation</div>
+<h2>The LLM is the <span class="highlight">decision layer</span>, not the knowledge source.</h2>
+<div class="pipeline p4">
+  <div class="pipeline-item"><div class="icon" data-icon="doc"></div><strong>Query</strong><small>Fault description</small></div>
+  <div class="pipeline-item"><div class="icon cyan" data-icon="search"></div><strong>Evidence</strong><small>Retrieved candidates</small></div>
+  <div class="pipeline-item"><div class="icon violet" data-icon="robot"></div><strong>LLM</strong><small>Select + explain</small></div>
+  <div class="pipeline-item"><div class="icon mint" data-icon="check"></div><strong>Grounded answer</strong><small>Diagnosis + repair + citations</small></div>
+</div>
+<div class="winner" style="margin-top:24px;">
+  <div style="display:flex;align-items:center;gap:12px;"><div class="icon amber" data-icon="shield" style="margin:0;"></div><strong>Safety principle</strong></div>
+  <p style="margin:8px 0 0;">When available information is insufficient, the system requests additional details instead of answering prematurely.</p>
+</div>
+</section>
+
+<!-- 16 EXPERIMENTAL SETUP -->
+<section class="slide">
+<div class="slide-number">16 / 22</div>
+<div class="eyebrow">15 · Experimental setup</div>
+<h2>Evaluation under<br><span class="highlight">controlled conditions.</span></h2>
+<div class="big-stats">
+  <div class="stat"><div class="stat-number" data-count="50" data-format="int">0</div><div class="stat-label">held-out, hand-labeled diagnostic queries</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--cyan-dark);" data-count="3" data-format="int">0</div><div class="stat-label">generation backbones</div></div>
+  <div class="stat"><div class="stat-number" style="color:var(--coral-dark);" data-count="3" data-format="int">0</div><div class="stat-label">evaluation dimensions</div></div>
+</div>
+<div class="cards" style="margin-top:18px;">
+  <div class="card"><h3>Models</h3><p>Qwen2.5-7B-Instruct<br>Llama-3-8B-Instruct<br>Gemma-2-9B-it</p></div>
+  <div class="card"><h3>Retrieval</h3><p>Recall@5<br>Mean Reciprocal Rank</p></div>
+  <div class="card"><h3>Generation</h3><p>Top-1 accuracy<br>Accuracy on retrieval hits</p></div>
+</div>
+</section>
+
+<!-- 17 RETRIEVAL RESULTS -->
+<section class="slide">
+<div class="slide-number">17 / 22</div>
+<div class="eyebrow">16 · Results</div>
+<h2>GraphRAG raises the<br><span class="highlight">retrieval ceiling.</span></h2>
+<div class="chart-container">
+<svg class="chart" viewBox="0 0 900 230">
+  <line x1="90" y1="185" x2="850" y2="185" stroke="#dfe3ec" stroke-width="2"/>
+  <rect x="210" y="70" width="150" height="115" rx="14" fill="#79dfe5" class="chart-bar"/>
+  <text x="285" y="58" text-anchor="middle" font-size="24" font-weight="800" fill="#149aa7" class="chart-label">74%</text>
+  <text x="285" y="210" text-anchor="middle" font-size="14" fill="#68738a">Hybrid RAG</text>
+  <rect x="540" y="45" width="150" height="140" rx="14" fill="#9a8df7" class="chart-bar"/>
+  <text x="615" y="33" text-anchor="middle" font-size="24" font-weight="800" fill="#6757d8" class="chart-label">90%</text>
+  <text x="615" y="210" text-anchor="middle" font-size="14" fill="#68738a">GraphRAG</text>
+</svg>
+</div>
+<div class="winner" style="margin-top:14px;">
+  <strong>+16 percentage points</strong>
+  <p style="margin:6px 0 0;">GraphRAG retrieves the correct diagnosis within the top five candidates for 90% of cases, vs. 74% for Hybrid RAG (diagnosis-level Recall@5, n=50).</p>
+</div>
+</section>
+
+<!-- 18 END TO END -->
+<section class="slide">
+<div class="slide-number">18 / 22</div>
+<div class="eyebrow">17 · End-to-end results</div>
+<h2>The advantage persists<br><span class="highlight">across all three LLMs.</span></h2>
+<div class="chart-container">
+<svg class="chart" viewBox="0 0 950 250">
+  <line x1="80" y1="205" x2="900" y2="205" stroke="#dfe3ec" stroke-width="2"/>
+  <rect x="110" y="90" width="60" height="115" rx="10" fill="#79dfe5" class="chart-bar"/>
+  <rect x="180" y="68" width="60" height="137" rx="10" fill="#9a8df7" class="chart-bar"/>
+  <text x="175" y="228" text-anchor="middle" font-size="12">Qwen2.5-7B</text>
+  <rect x="370" y="86" width="60" height="119" rx="10" fill="#79dfe5" class="chart-bar"/>
+  <rect x="440" y="60" width="60" height="145" rx="10" fill="#9a8df7" class="chart-bar"/>
+  <text x="435" y="228" text-anchor="middle" font-size="12">Llama-3-8B</text>
+  <rect x="630" y="76" width="60" height="129" rx="10" fill="#79dfe5" class="chart-bar"/>
+  <rect x="700" y="52" width="60" height="153" rx="10" fill="#9a8df7" class="chart-bar"/>
+  <text x="695" y="228" text-anchor="middle" font-size="12">Gemma-2-9B</text>
+  <rect x="80" y="15" width="13" height="13" rx="3" fill="#79dfe5"/>
+  <text x="100" y="26" font-size="12">Hybrid RAG</text>
+  <rect x="205" y="15" width="13" height="13" rx="3" fill="#9a8df7"/>
+  <text x="226" y="26" font-size="12">GraphRAG</text>
+</svg>
+</div>
+<div class="two-column" style="margin-top:14px;">
+  <div class="method"><span class="badge cyan">Hybrid RAG</span><h3 style="margin-top:10px;">70&ndash;72%</h3><p>Top-1 diagnostic accuracy</p></div>
+  <div class="method"><span class="badge violet">GraphRAG</span><h3 style="margin-top:10px;">81&ndash;84%</h3><p>Top-1 diagnostic accuracy</p></div>
+</div>
+</section>
+
+<!-- 19 GROUNDING -->
+<section class="slide">
+<div class="slide-number">19 / 22</div>
+<div class="eyebrow">18 · Grounding &amp; faithfulness</div>
+<h2>GraphRAG answers are<br><span class="highlight">strongly grounded.</span></h2>
+<div class="two-column">
+  <div class="winner"><div class="winner-number" data-count="1.00" data-decimals="2">0.00</div><strong>Faithfulness</strong><p>The model never introduces a diagnosis outside the retrieved candidates.</p></div>
+  <div class="winner"><div class="winner-number" data-count="0.98" data-decimals="2">0.00</div><strong>Citation validity</strong><p>Cited guides almost always exist in the retrieved context.</p></div>
+</div>
+<p style="text-align:center;margin-top:16px;font-size:12.5px;">Results shown for the <strong>GraphRAG pipeline with Qwen2.5-7B</strong>. Together they confirm the diagnosis is driven by retrieved evidence, not the model's prior knowledge.</p>
+</section>
+
+<!-- 20 APPLICATION -->
+<section class="slide">
+<div class="slide-number">20 / 22</div>
+<div class="eyebrow">19 · Application interface</div>
+<h2>From experiment to<br><span class="highlight">technician assistant.</span></h2>
+<div class="two-column" style="grid-template-columns:1.1fr .9fr;">
+  <div class="app-window">
+    <div class="app-top"><div class="dot2"></div><div class="dot2"></div><div class="dot2"></div><span style="margin-left:8px;font-size:10px;font-weight:700;">ReparoAI</span></div>
+    <div class="app-body">
+      <div class="sidebar">
+        <div class="side-item">Dashboard</div>
+        <div class="side-item active">Diagnostic Chat</div>
+        <div class="side-item">Case History</div>
+        <div class="side-item">Knowledge Base</div>
+      </div>
+      <div class="chat2">
+        <div class="message user-msg">Device: iPhone<br><br>"The screen stays black but the phone vibrates."</div>
+        <div class="message ai-msg"><strong>Likely diagnosis</strong><br><br>Display-related fault.<br><br><strong>Recommended checks</strong><br>1. Check display connection.<br>2. Inspect relevant components.
+        <div class="citation">Evidence · Guide #4471</div></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="screen-chips" style="flex-direction:column;">
+      <div class="screen-chip"><b>Dashboard</b>Recent activity, ongoing cases, quick start.</div>
+      <div class="screen-chip"><b>Case History</b>Past sessions filtered by device category.</div>
+      <div class="screen-chip"><b>Knowledge Base Browser</b>Common issues by device category.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 21 CONCLUSION -->
+<section class="slide">
+<div class="slide-number">21 / 22</div>
+<div class="eyebrow">20 · Conclusion</div>
+<h2>The key lesson: <span class="highlight">retrieval matters.</span></h2>
+<div class="conclusion-grid">
+  <div class="conclusion-card"><div class="number">01 · KNOWLEDGE</div><h3>A diagnostic layer can be constructed</h3><p>Repair content from iFixit and YouTube was transformed into a normalised diagnostic corpus and knowledge graph.</p></div>
+  <div class="conclusion-card"><div class="number">02 · RETRIEVAL</div><h3>Structured evidence improves retrieval</h3><p>GraphRAG reached 90% Recall@5 compared with 74% for Hybrid RAG.</p></div>
+  <div class="conclusion-card"><div class="number">03 · DIAGNOSIS</div><h3>Better retrieval improves diagnosis</h3><p>GraphRAG achieved 81&ndash;84% top-1 accuracy, consistently outperforming Hybrid RAG.</p></div>
+</div>
+<div class="lf-row">
+  <div class="lf-col"><h4>Limitations</h4><p>Smartphone-dominated corpus, iFixit diagnoses inferred rather than observed, modest eval set, retrieval-bounded generation, English-only.</p></div>
+  <div class="lf-col"><h4>Future work</h4><p>Broader device &amp; board-level coverage, multilingual retrieval, multimodal evidence, larger benchmark, fine-tuned generation.</p></div>
+</div>
+</section>
+
+<!-- 22 THANK YOU -->
+<section class="slide">
+<div class="slide-number">22 / 22</div>
+<div class="eyebrow">Thank you</div>
+<h1 style="font-size:52px;">Questions &amp;<br><span class="highlight">Discussion.</span></h1>
+<p style="max-width:560px;font-size:14px;">Design of an Intelligent Assistant for Fault Diagnosis in Electronic Boards and Modules</p>
+<div class="authors" style="margin-top:20px;">
+  <div class="author">Chaima Bechetella</div>
+  <div class="author">Khadidja Djennane</div>
+  <div class="author">Dr. Djenadi Ali &middot; Dr. Mammasse Amine</div>
+</div>
+</section>
+
+<div class="controls">
+  <div class="control" onclick="previousSlide()">&larr;</div>
+  <div class="control" onclick="nextSlide()">&rarr;</div>
+</div>
+<div class="hint">&larr; &rarr; navigate &middot; F fullscreen &middot; Home / End</div>
+<div class="progress" id="progress"></div>
+
+</div>
+</div>
+</div>
+
+<script>
+var ICONS = {
+  bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>',
+  puzzle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2" stroke-linecap="round"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c2-1 5-1 7 0v14c-2-1-5-1-7 0V5z"/><path d="M20 5c-2-1-5-1-7 0v14c2-1 5-1 7 0V5z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="16" y1="16" x2="21" y2="21"/></svg>',
+  robot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="3"/><line x1="12" y1="8" x2="12" y2="4"/><circle cx="12" cy="3" r="1.2" fill="currentColor" stroke="none"/><circle cx="9.5" cy="13.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13.5" r="1.2" fill="currentColor" stroke="none"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg>',
+  person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.5-4 5-6 7-6s5.5 2 7 6"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>',
+  graph: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><line x1="7.7" y1="7.3" x2="10.5" y2="16.2"/><line x1="16.3" y1="7.3" x2="13.5" y2="16.2"/><line x1="8.2" y1="6" x2="15.8" y2="6"/></svg>',
+  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>'
+};
+document.querySelectorAll('[data-icon]').forEach(function(el){
+  var key = el.getAttribute('data-icon');
+  if(ICONS[key]){ el.innerHTML = ICONS[key]; }
+});
+
+var slides = Array.from(document.querySelectorAll('.slide'));
+var current = 0;
+
+function countUp(el){
+  var target = parseFloat(el.getAttribute('data-count'));
+  var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+  var suffix = el.getAttribute('data-suffix') || '';
+  var isInt = el.getAttribute('data-format') === 'int';
+  var duration = 900;
+  var start = null;
+  function fmt(v){
+    if(isInt){ return Math.round(v).toLocaleString('en-US'); }
+    return v.toFixed(decimals);
+  }
+  function step(ts){
+    if(!start) start = ts;
+    var p = Math.min((ts - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(target * eased) + suffix;
+    if(p < 1){ requestAnimationFrame(step); }
+    else { el.textContent = fmt(target) + suffix; }
+  }
+  requestAnimationFrame(step);
+}
+
+function restartAnimations(slide){
+  var animated = slide.querySelectorAll('.chart-bar, .card, .rq, .stat, .pipeline-item, .conclusion-card, .symptom, .winner, .chart-label');
+  animated.forEach(function(el){
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  });
+  slide.querySelectorAll('[data-count]').forEach(function(el){
+    countUp(el);
+  });
+}
+
+function showSlide(index){
+  if(index < 0){ index = 0; }
+  if(index >= slides.length){ index = slides.length - 1; }
+  slides.forEach(function(s){ s.classList.remove('active'); });
+  slides[index].classList.add('active');
+  current = index;
+  updateProgress();
+  restartAnimations(slides[index]);
+}
+
+function nextSlide(){ showSlide(Math.min(current + 1, slides.length - 1)); }
+function previousSlide(){ showSlide(Math.max(current - 1, 0)); }
+
+function updateProgress(){
+  var percent = ((current + 1) / slides.length) * 100;
+  document.getElementById('progress').style.width = percent + '%';
+}
+
+document.addEventListener('keydown', function(event){
+  switch(event.key){
+    case 'ArrowRight': case ' ': case 'PageDown':
+      event.preventDefault(); nextSlide(); break;
+    case 'ArrowLeft': case 'PageUp':
+      event.preventDefault(); previousSlide(); break;
+    case 'Home': showSlide(0); break;
+    case 'End': showSlide(slides.length - 1); break;
+    case 'f': case 'F': toggleFullscreen(); break;
+  }
+});
+
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].screenX; });
+document.addEventListener('touchend', function(e){
+  var diff = touchStartX - e.changedTouches[0].screenX;
+  if(Math.abs(diff) < 50){ return; }
+  if(diff > 0){ nextSlide(); } else { previousSlide(); }
+});
+
+function toggleFullscreen(){
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(function(){}); }
+  else { document.exitFullscreen(); }
+}
+
+document.querySelector('.presentation').addEventListener('click', function(event){
+  if(event.target.closest('.control')){ return; }
+  var x = event.clientX / window.innerWidth;
+  if(x > .65){ nextSlide(); } else if(x < .35){ previousSlide(); }
+});
+
+var stage = document.getElementById('stage');
+function resizeStage(){
+  var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.96;
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', resizeStage);
+resizeStage();
+
+showSlide(0);
+</script>
+</body>
+</html>
