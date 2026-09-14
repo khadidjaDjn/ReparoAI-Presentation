@@ -134,36 +134,6 @@ a:hover { color: #2E1B54; text-decoration: underline; }
   </div>
 </section>
 
-<section data-label="Context" data-screen-label="04" data-speaker-notes="Electronic boards are hard to diagnose: many interconnected components, few measurement points, and diagnostic reasoning that lives in documentation rather than in the raw signal. LLMs could help but their knowledge is frozen and they hallucinate. This sets up the question we build the rest of the talk around." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
-  <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-200px;right:-140px;width:760px;height:620px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
-    <div data-anim="blob" style="position:absolute;bottom:-160px;left:-140px;width:520px;height:420px;background:#F8DCE4;border-radius:52% 48% 56% 44%/46% 54% 46% 54%;opacity:.75;pointer-events:none"></div>
-    <div style="position:absolute;top:80px;right:150px;width:140px;height:90px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:24px 24px;pointer-events:none"></div>
-
-    <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:32px;max-width:1400px">
-      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">01 · INTRODUCTION &nbsp;·&nbsp; CONTEXT</div></div>
-
-      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:56px;line-height:1.15;letter-spacing:-.02em;color:#241E50">Board-level diagnosis is knowledge-intensive, not just signal analysis.</h2>
-
-      <div data-anim="rule" style="--d:.16s;width:180px;height:4px;background:#F0A87A"></div>
-
-      <div data-anim="stagger" style="--d:.24s;display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;gap:18px;align-items:flex-start">
-          <div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div>
-          <div style="font-size:28px;line-height:1.5;color:#3A3552">A single symptom can point to several components at once — and locating the right one depends on schematics and datasheets, not the raw signal alone.</div>
-        </div>
-        <div style="display:flex;gap:18px;align-items:flex-start">
-          <div style="width:9px;height:9px;background:#B5537A;margin-top:13px;flex:0 0 auto"></div>
-          <div style="font-size:28px;line-height:1.5;color:#3A3552">LLMs can reason over this kind of documentation — but their knowledge is frozen at training time, and they hallucinate.</div>
-        </div>
-      </div>
-
-      <div data-anim style="--d:.4s;border-left:5px solid #4B2E83;padding:8px 0 8px 28px;margin-top:6px">
-        <div style="font-size:32px;line-height:1.5;color:#241E50;font-weight:500;font-style:italic">So how do we get a model to diagnose reliably — grounded in evidence, not in its own guesses?</div>
-      </div>
-    </div>
-  </div>
-</section>
 <section data-label="Context" data-screen-label="04" data-speaker-notes="Fault diagnosis in electronic boards depends on expert knowledge and slow consultation of documentation, and the repair knowledge that exists publicly is scattered and unstructured. LLMs could automate the task, but an ungrounded model states unsupported causes with full confidence — and a wrong diagnosis means a wrong repair. Hence the question this work addresses." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:520px;height:430px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
@@ -481,6 +451,76 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     </div>
   </div>
 </section>
+
+
+<section data-label="Reverse engineering" data-screen-label="12" data-speaker-notes="iFixit guides needed the opposite treatment: backward reasoning. Given the repair action, Qwen2.5-7B-Instruct in 4-bit infers the diagnostic information that would plausibly justify it — six fields. Device model, category, problem description, URL and source are copied from the guide, preserving provenance." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:500px;height:420px;background:#FDF1E3;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#E8BE93 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:30px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#F0A87A"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; § 2.5 REVERSE ENGINEERING</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Reverse Engineering</h2>
+      <div style="display:grid;grid-template-columns:0.75fr 1.25fr;gap:56px;align-items:center;flex:1;min-height:0">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Given the repair action, infer the diagnostic information that could plausibly justify it — treated as <em>inferred</em> knowledge, not observed.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Shared teardown prefixes removed; whole-device teardowns excluded with their reason logged.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Cosmetic parts — cover, bezel, frame, casing, panel — block invented electrical failures, then a deterministic check forces <span style="font-family:'IBM Plex Mono',monospace;font-size:24px">low_confidence</span>.</div></div>
+        </div>
+        <div data-anim="stagger" style="--d:.44s;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 680 354" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:640px">
+            <defs>
+              <marker id="rearrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6B6478" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            </defs>
+            <line x1="340" y1="76" x2="340" y2="92" stroke="#6B6478" stroke-width="1"/>
+            <path d="M340 92 L190 92 L190 110" fill="none" stroke="#6B6478" stroke-width="1" marker-end="url(#rearrow)"/>
+            <path d="M340 92 L490 92 L490 110" fill="none" stroke="#6B6478" stroke-width="1" marker-end="url(#rearrow)"/>
+            <path d="M490 166 L490 188 L332.5 188 L332.5 208" fill="none" stroke="#6B6478" stroke-width="1" marker-end="url(#rearrow)"/>
+
+            <rect x="230" y="20" width="220" height="56" rx="6" fill="#F1F0ED" stroke="#B4B2A9" stroke-width="1"/>
+            <text x="340" y="43" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="17" fill="#2C2C2A">iFixit repair guide</text>
+            <text x="340" y="63" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#5F5E5A">Repair action + metadata</text>
+
+            <rect x="60" y="110" width="260" height="56" rx="6" fill="#EDF3EC" stroke="#8FB89A" stroke-width="1"/>
+            <text x="190" y="133" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="17" fill="#2C4A34">Copied fields</text>
+            <text x="190" y="153" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#4F7A5D">Device + guide metadata</text>
+
+            <rect x="360" y="110" width="260" height="56" rx="6" fill="#EFEAFB" stroke="#8E7BD6" stroke-width="1"/>
+            <text x="490" y="133" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-weight="600" font-size="16" fill="#4B2E83">Qwen2.5-7B-Instruct</text>
+            <text x="490" y="153" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#6B4FB5">4-bit · backward reasoning</text>
+
+            <rect x="40" y="210" width="185" height="54" rx="6" fill="#F4F1FC" stroke="#D9D2F0" stroke-width="1"/>
+            <text x="132.5" y="233" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#4B2E83">Symptoms</text>
+            <text x="132.5" y="251" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#4A4566">Observable, technical</text>
+
+            <rect x="240" y="210" width="185" height="54" rx="6" fill="#F4F1FC" stroke="#D9D2F0" stroke-width="1"/>
+            <text x="332.5" y="233" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#4B2E83">User phrasings</text>
+            <text x="332.5" y="251" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#4A4566">How customers phrase it</text>
+
+            <rect x="435" y="210" width="185" height="54" rx="6" fill="#F4F1FC" stroke="#D9D2F0" stroke-width="1"/>
+            <text x="527.5" y="233" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#4B2E83">Root causes</text>
+            <text x="527.5" y="251" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#4A4566">Tied to component</text>
+
+            <rect x="40" y="280" width="185" height="54" rx="6" fill="#F4F1FC" stroke="#D9D2F0" stroke-width="1"/>
+            <text x="132.5" y="303" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#4B2E83">Diagnostic Qs</text>
+            <text x="132.5" y="321" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#4A4566">Separates alternatives</text>
+
+            <rect x="240" y="280" width="185" height="54" rx="6" fill="#F4F1FC" stroke="#D9D2F0" stroke-width="1"/>
+            <text x="332.5" y="303" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#4B2E83">Differentiators</text>
+            <text x="332.5" y="321" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#4A4566">Rules out alternatives</text>
+
+            <rect x="435" y="280" width="185" height="54" rx="6" fill="#FDF3E8" stroke="#E3934F" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="527.5" y="303" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#B8703A">Low confidence</text>
+            <text x="527.5" y="321" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8A5A2E">Weak fault link</text>
+          </svg>
+        </div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>iFIXIT REVERSE ENGINEERING</span><span><span style="color:#4B2E83">12</span> / 48</span></div>
+    </div>
+  </div>
+</section>
+
+
 
 <section data-label="Vocabulary &amp; tagging" data-screen-label="14" data-speaker-notes="A corpus-derived vocabulary groups varied phrasings under one canonical tag, so guides describing the same fault converge onto the same node. Grouping by meaning keeps lexically similar but distinct faults apart. On 50 manually tagged guides, fuzzy matching reached 70 percent and collapsed exactly the distinctions we built the vocabulary to preserve; the LLM tagger reached 92 percent." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
