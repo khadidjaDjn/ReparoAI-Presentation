@@ -134,14 +134,70 @@ a:hover { color: #2E1B54; text-decoration: underline; }
   </div>
 </section>
 
-<section data-label="Context" data-screen-label="04" data-speaker-notes="Fault diagnosis depends on expert knowledge and slow consultation of documentation. LLMs could automate it, but they hallucinate unsupported information, which disqualifies them for a task where a wrong diagnosis means a wrong repair." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<section data-label="Context" data-screen-label="04" data-speaker-notes="Electronic boards are hard to diagnose: many interconnected components, few measurement points, and diagnostic reasoning that lives in documentation rather than in the raw signal. LLMs could help but their knowledge is frozen and they hallucinate. This sets up the question we build the rest of the talk around." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-200px;right:-140px;width:760px;height:620px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-160px;left:-140px;width:520px;height:420px;background:#F8DCE4;border-radius:52% 48% 56% 44%/46% 54% 46% 54%;opacity:.75;pointer-events:none"></div>
+    <div style="position:absolute;top:80px;right:150px;width:140px;height:90px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:24px 24px;pointer-events:none"></div>
+
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:32px;max-width:1400px">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">01 · INTRODUCTION &nbsp;·&nbsp; CONTEXT</div></div>
+
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:56px;line-height:1.15;letter-spacing:-.02em;color:#241E50">Board-level diagnosis is knowledge-intensive, not just signal analysis.</h2>
+
+      <div data-anim="rule" style="--d:.16s;width:180px;height:4px;background:#F0A87A"></div>
+
+      <div data-anim="stagger" style="--d:.24s;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:18px;align-items:flex-start">
+          <div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div>
+          <div style="font-size:28px;line-height:1.5;color:#3A3552">A single symptom can point to several components at once — and locating the right one depends on schematics and datasheets, not the raw signal alone.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:flex-start">
+          <div style="width:9px;height:9px;background:#B5537A;margin-top:13px;flex:0 0 auto"></div>
+          <div style="font-size:28px;line-height:1.5;color:#3A3552">LLMs can reason over this kind of documentation — but their knowledge is frozen at training time, and they hallucinate.</div>
+        </div>
+      </div>
+
+      <div data-anim style="--d:.4s;border-left:5px solid #4B2E83;padding:8px 0 8px 28px;margin-top:6px">
+        <div style="font-size:32px;line-height:1.5;color:#241E50;font-weight:500;font-style:italic">So how do we get a model to diagnose reliably — grounded in evidence, not in its own guesses?</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="Context" data-screen-label="04" data-speaker-notes="Fault diagnosis in electronic boards depends on expert knowledge and slow consultation of documentation, and the repair knowledge that exists publicly is scattered and unstructured. LLMs could automate the task, but an ungrounded model states unsupported causes with full confidence — and a wrong diagnosis means a wrong repair. Hence the question this work addresses." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:520px;height:430px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FCE6CB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:74px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
+
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">01 · INTRODUCTION &nbsp;·&nbsp; CONTEXT</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Context</h2>
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:56px;min-height:0;max-width:1450px">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:30px">
+          <div style="display:flex;gap:22px;align-items:flex-start"><div style="width:10px;height:10px;background:#8E7BD6;margin-top:16px;flex:0 0 auto"></div><div style="font-size:32px;line-height:1.45;color:#3A3552;text-wrap:pretty">Fault diagnosis in electronic boards and modules depends on expert knowledge and time-consuming consultation of technical documentation.</div></div>
+          <div style="display:flex;gap:22px;align-items:flex-start"><div style="width:10px;height:10px;background:#8E7BD6;margin-top:16px;flex:0 0 auto"></div><div style="font-size:32px;line-height:1.45;color:#3A3552;text-wrap:pretty">Large language models could automate the task, but they state unsupported causes with full confidence — and a wrong diagnosis means a wrong repair.</div></div>
+        </div>
+
+        <div data-anim style="--d:.5s;border-left:5px solid #F0A87A;background:#FDF3E8;padding:38px 44px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#B8703A">THE QUESTION</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:44px;line-height:1.25;letter-spacing:-.01em;color:#241E50;margin-top:14px;text-wrap:pretty">How can a language model be grounded in real repair knowledge, so that its diagnoses are supported by evidence?</div>
+        </div>
+      </div>
+
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>CONTEXT</span><span><span style="color:#4B2E83">04</span> / 48</span></div>
+    </div>
+  </div>
+</section>
+<!-- <section data-label="Context" data-screen-label="04" data-speaker-notes="Fault diagnosis depends on expert knowledge and slow consultation of documentation. LLMs could automate it, but they hallucinate unsupported information, which disqualifies them for a task where a wrong diagnosis means a wrong repair." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:520px;height:430px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FCE6CB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
     <div style="position:absolute;top:56px;right:74px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
     <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
       <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">01 · INTRODUCTION &nbsp;·&nbsp; CONTEXT</div></div>
-      <!-- <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Diagnosis is the bottleneck, not the repair</h2> -->
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Diagnosis is the bottleneck, not the repair</h2> 
       <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center;flex:1;min-height:0">
         <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:24px">
           <div style="display:flex;gap:20px;align-items:flex-start"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:14px;flex:0 0 auto"></div><div style="font-size:28px;line-height:1.45;color:#3A3552">Fault diagnosis in electronic systems depends on expert knowledge and time-consuming consultation of technical documentation.</div></div>
@@ -156,9 +212,9 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>CONTEXT &amp; MOTIVATION</span><span><span style="color:#4B2E83">04</span> / 48</span></div>
     </div>
   </div>
-</section>
+</section> -->
 
-<section data-label="Research questions" data-screen-label="05" data-speaker-notes="Four research questions structure the thesis: knowledge construction, retrieval effectiveness, grounding and faithfulness, and the determinants of end-to-end performance." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<!-- <section data-label="Research questions" data-screen-label="05" data-speaker-notes="Four research questions structure the thesis: knowledge construction, retrieval effectiveness, grounding and faithfulness, and the determinants of end-to-end performance." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:520px;height:430px;background:#F8DCE4;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;opacity:.8;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-160px;left:-130px;width:400px;height:340px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
@@ -175,9 +231,9 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>RESEARCH QUESTIONS</span><span><span style="color:#4B2E83">05</span> / 48</span></div>
     </div>
   </div>
-</section>
+</section> -->
 
-<section data-label="Contributions" data-screen-label="06" data-speaker-notes="Four contributions: a diagnostic dataset of about 2,300 cases extracted from public sources, a knowledge graph for electronics diagnosis, two retrieval strategies for grounding, and a controlled comparative evaluation." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<!--<section data-label="Contributions" data-screen-label="06" data-speaker-notes="Four contributions: a diagnostic dataset of about 2,300 cases extracted from public sources, a knowledge graph for electronics diagnosis, two retrieval strategies for grounding, and a controlled comparative evaluation." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-180px;right:-120px;width:560px;height:460px;background:#EDF3EC;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:380px;height:330px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
@@ -194,7 +250,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>CONTRIBUTIONS</span><span><span style="color:#4B2E83">06</span> / 48</span></div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section data-label="02 Data &amp; KG" data-screen-label="07" data-speaker-notes="Second part: how the diagnostic knowledge base and the knowledge graph were built, since the knowledge we needed does not exist in ready-made form." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
@@ -2280,6 +2336,48 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     </div>
   </div>
 </section>
+<!-- the pdf and the demo :  -->
+ <section data-label="Attestation" data-screen-label="48" data-speaker-notes="Attestation de plagiat / originalité du mémoire." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:490px;height:410px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">ANNEXE &nbsp;·&nbsp; ATTESTATION</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Attestation de deploiement</h2>
+      <div data-anim style="--d:.16s;flex:1;display:flex;align-items:center;justify-content:center;min-height:0">
+        <div style="width:100%;max-width:1100px;height:100%;max-height:780px;box-shadow:0 12px 40px rgba(75,46,131,.12);border:1px solid #E8E4F2;display:flex;align-items:center;justify-content:center;overflow:hidden">
+  <img src="attestation.png" alt="Attestation de dépôt" style="width:100%;height:100%;object-fit:contain">
+</div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>ATTESTATION</span><span><span style="color:#4B2E83">48</span> / 50</span></div>
+    </div>
+  </div>
+</section>
+<section data-label="Video demo" data-screen-label="49" data-speaker-notes="Démonstration vidéo de l'assistant en action." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:490px;height:410px;background:#F8DCE4;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;opacity:.8;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#E9AFC0 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#E58FA5"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">ANNEXE &nbsp;·&nbsp; DÉMONSTRATION</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Démonstration vidéo</h2>
+      <div data-anim style="--d:.16s;flex:1;display:flex;align-items:center;justify-content:center;min-height:0">
+        <video
+          controls
+          preload="metadata"
+          style="width:100%;max-width:1200px;height:100%;max-height:780px;background:#000;box-shadow:0 12px 40px rgba(75,46,131,.15);border:1px solid #E8E4F2;object-fit:contain">
+          <!-- Remplace le src ci-dessous par le chemin/URL réel de ta vidéo -->
+          <source src="demo.mp4" type="video/mp4">
+          Ton navigateur ne supporte pas la lecture vidéo intégrée.
+        </video>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>DÉMONSTRATION</span><span><span style="color:#4B2E83">49</span> / 50</span></div>
+    </div>
+  </div>
+</section>
+
+
 
 <section data-label="Thank you" data-screen-label="48" data-speaker-notes="Thank you for your attention. We would be glad to answer your questions." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
