@@ -373,7 +373,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
   </div>
 </section>
 
-<section data-label="Model selection" data-screen-label="11" data-speaker-notes="Thirty videos were manually annotated as ground truth. Two instruction-tuned models of comparable scale were compared with field-appropriate metrics: cosine similarity for free text, ROUGE-L for the repair procedure, exact match for categorical fields. LLaMA-3-8B-Instruct won on most fields and on the weighted score." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<!-- <section data-label="Model selection" data-screen-label="11" data-speaker-notes="Thirty videos were manually annotated as ground truth. Two instruction-tuned models of comparable scale were compared with field-appropriate metrics: cosine similarity for free text, ROUGE-L for the repair procedure, exact match for categorical fields. LLaMA-3-8B-Instruct won on most fields and on the weighted score." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#F8DCE4;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
@@ -402,6 +402,62 @@ a:hover { color: #2E1B54; text-decoration: underline; }
         </div>
       </div>
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>EXTRACTION MODEL SELECTION</span><span><span style="color:#4B2E83">11</span> / 48</span></div>
+    </div>
+  </div>
+</section> -->
+<section data-label="Extraction Model Selection" data-screen-label="11" data-speaker-notes="Thirty YouTube repair videos were manually annotated into the common schema; that hand-built set is the ground truth. Two instruction-tuned models of comparable scale were evaluated against it, both in Unsloth 4-bit form, so the comparison isolates architecture and training rather than model size. Each field was scored with a metric appropriate to it — exact match for the categorical fields, cosine similarity over sentence embeddings for the free-text fields, ROUGE-L for the repair procedure — and the per-field scores were combined into one weighted score, with the repair procedure carrying the greatest weight. LLaMA-3-8B-Instruct came out ahead on most fields and on the weighted score, and was selected for the full corpus." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#F8DCE4;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;bottom:70px;right:80px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 &middot; DATA &amp; KG &nbsp;&middot;&nbsp; &sect; 2.4.2 &mdash; 2.4.4</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Extraction Model Selection</h2>
+      <div style="flex:1;display:grid;grid-template-columns:1fr 660px;gap:70px;align-items:center;min-height:0">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:26px">
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"><b style="color:#241E50">Manually annotated  ground truth</b>.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"> <b style="color:#241E50">LLaMA-3-8B-Instruct</b> and <b style="color:#241E50">Mistral-7B-Instruct-v0.3</b>were evaluated.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#6E9B7C;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"><b style="color:#241E50">LLaMA-3-8B-Instruct outperformed</b> on most fields and on the weighted scoreand it was selected for the full corpus.</div></div>
+        </div>
+        <div data-anim="fade" style="--d:.5s;display:flex;flex-direction:column;gap:0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:22px;letter-spacing:.16em;color:#6B6478;padding-bottom:12px;border-bottom:1.5px solid #241E50">FIELD-LEVEL METRICS</div>
+          <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;color:#4B2E83;width:266px;flex:0 0 auto">category</div><div style="font-size:22px;color:#4A4566">Exact-match accuracy</div></div>
+          <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;color:#4B2E83;width:266px;flex:0 0 auto">device_model</div><div style="font-size:22px;color:#4A4566">Exact-match accuracy</div></div>
+          <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;color:#4B2E83;width:266px;flex:0 0 auto">problem_description</div><div style="font-size:22px;color:#4A4566">Cosine similarity</div></div>
+          <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;color:#4B2E83;width:266px;flex:0 0 auto">diagnosis</div><div style="font-size:22px;color:#4A4566">Cosine similarity</div></div>
+          <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1.5px solid #241E50"><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;color:#4B2E83;width:266px;flex:0 0 auto">repair_steps</div><div style="font-size:22px;color:#4A4566">ROUGE-L</div></div>
+          <div style="font-size:23px;line-height:1.42;color:#5A5470;padding-top:16px">Combined as <span style="font-family:'IBM Plex Mono',monospace;font-size:22px">S = &Sigma; w&#7522;s&#7522;</span> &mdash; the repair procedure carries the greatest weight.</div>
+        </div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>EXTRACTION MODEL SELECTION</span><span><span style="color:#4B2E83">11</span> / 29</span></div>
+    </div>
+  </div>
+</section>
+<section data-label="Extraction Model Comparison" data-screen-label="12" data-speaker-notes="Per-field scores for the two candidates on the thirty-video ground truth. The categorical fields are saturated — both models read category and device correctly, so they separate nothing. The gap opens on the fields that carry meaning: problem description, diagnosis, and the repair procedure, where LLaMA is ahead by nine to seventeen points. Order similarity is the one field where Mistral edges ahead, by a single point, and it is also the lowest score either model reaches — step ordering is the hardest part of the extraction. On the aggregate weighted score, 0.92 against 0.84." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:26px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 &middot; DATA &amp; KG &nbsp;&middot;&nbsp; FIGURE 2.3 &nbsp;&middot;&nbsp; n = 30</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Extraction Model Comparison</h2>
+      <div style="flex:1;display:flex;flex-direction:column;gap:18px;justify-content:center;min-height:0">
+        <div data-anim style="--d:.16s;display:flex;align-items:center;gap:30px;justify-content:flex-end">
+          <div style="display:flex;align-items:center;gap:11px"><div style="width:20px;height:20px;background:#6B4FB5;border-radius:3px"></div><div style="font-size:23px;color:#3A3552">LLaMA-3-8B-Instruct</div></div>
+          <div style="display:flex;align-items:center;gap:11px"><div style="width:20px;height:20px;background:#B07F26;border-radius:3px"></div><div style="font-size:23px;color:#3A3552">Mistral-7B-Instruct-v0.3</div></div>
+        </div>
+        <div data-anim="fade" style="--d:.24s;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:14px">
+            <div style="width:48px;height:262px;display:flex;flex-direction:column;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:20px;color:#8A8A8A;text-align:right;flex:0 0 auto"><div style="transform:translateY(-8px)">1.00</div><div style="transform:translateY(-8px)">0.75</div><div style="transform:translateY(-8px)">0.50</div><div style="transform:translateY(-8px)">0.25</div><div style="transform:translateY(-8px)">0</div></div>
+            <div style="flex:1;position:relative;height:262px;border-bottom:1.5px solid #C9C2E8">
+              <div style="position:absolute;left:0;right:0;top:0%;height:1px;background:#EDE9F5"></div><div style="position:absolute;left:0;right:0;top:25%;height:1px;background:#EDE9F5"></div><div style="position:absolute;left:0;right:0;top:50%;height:1px;background:#EDE9F5"></div><div style="position:absolute;left:0;right:0;top:75%;height:1px;background:#EDE9F5"></div>
+              <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-around"><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">1.00</div><div style="width:42px;height:262px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">1.00</div><div style="width:42px;height:262px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">1.00</div><div style="width:42px;height:262px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.88</div><div style="width:42px;height:231px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.78</div><div style="width:42px;height:204px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.61</div><div style="width:42px;height:160px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.77</div><div style="width:42px;height:202px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.68</div><div style="width:42px;height:178px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.57</div><div style="width:42px;height:149px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.47</div><div style="width:42px;height:123px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.37</div><div style="width:42px;height:97px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.38</div><div style="width:42px;height:100px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div><div style="display:flex;align-items:flex-end;gap:2px;height:100%;margin-left:34px;padding-left:34px;border-left:1.5px dashed #D6CCE8"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.92</div><div style="width:42px;height:241px;background:#6B4FB5;border-radius:4px 4px 0 0"></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#5A5470;margin-bottom:5px">0.84</div><div style="width:42px;height:220px;background:#B07F26;border-radius:4px 4px 0 0"></div></div></div></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-around;padding-left:62px"><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Category<br /><span style="color:#8A8A8A">accuracy</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Device<br /><span style="color:#8A8A8A">accuracy</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Problem description<br /><span style="color:#8A8A8A">semantic sim.</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Diagnosis<br /><span style="color:#8A8A8A">semantic sim.</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Repair steps<br /><span style="color:#8A8A8A">semantic F1</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25">Repair steps<br /><span style="color:#8A8A8A">order similarity</span></div><div style="width:182px;text-align:center;font-size:20px;color:#4A4566;line-height:1.25;margin-left:34px;padding-left:34px">Weighted score<br /><span style="color:#8A8A8A">aggregate</span></div></div>
+        </div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>EXTRACTION MODEL COMPARISON</span><span><span style="color:#4B2E83">12</span> / 29</span></div>
     </div>
   </div>
 </section>
@@ -453,81 +509,6 @@ a:hover { color: #2E1B54; text-decoration: underline; }
         <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Exclusions and failures logged separately, making the coverage and limitations of the dataset auditable.</div></div>
       </div>
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>OUTPUT VALIDATION</span><span><span style="color:#4B2E83">13</span> / 48</span></div>
-    </div>
-  </div>
-</section>
-
-<section data-label="Vocabulary &amp; tagging" data-screen-label="14" data-speaker-notes="A corpus-derived vocabulary groups varied phrasings under one canonical tag, so guides describing the same fault converge onto the same node. Grouping by meaning keeps lexically similar but distinct faults apart. On 50 manually tagged guides, fuzzy matching reached 70 percent and collapsed exactly the distinctions we built the vocabulary to preserve; the LLM tagger reached 92 percent." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
-  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:500px;height:420px;background:#F8DCE4;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;opacity:.8;pointer-events:none"></div>
-    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
-    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#E9AFC0 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
-    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
-      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#E58FA5"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; § 2.6.2 — 2.6.3</div></div>
-      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Canonical vocabulary and guide tagging</h2>
-      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center;flex:1;min-height:0">
-        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:22px">
-          <div style="display:flex;align-items:center;gap:22px">
-            <div style="display:flex;flex-direction:column;gap:10px;flex:1">
-              <div style="background:#F4F1FC;padding:14px 20px;font-size:24px;color:#3A3552">“won't turn on”</div>
-              <div style="background:#F4F1FC;padding:14px 20px;font-size:24px;color:#3A3552">“dead phone”</div>
-            </div>
-            <div style="display:flex;align-items:center"><div style="width:36px;height:1.5px;background:#8E7BD6"></div><div style="width:0;height:0;border-left:9px solid #8E7BD6;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
-            <div style="border:1.5px solid #4B2E83;padding:18px 24px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#2E1B54">wont_turn_on</div>
-          </div>
-          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Tags are derived from the data: distinct phrases counted, grouped by semantic similarity, one canonical label per group — then reviewed by an LLM under human supervision.</div></div>
-          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Grouping by meaning keeps distinct faults apart: “stuck on the Android logo” (recovery hang) stays separate from “stuck on the fastboot logo” (bootloader failure).</div></div>
-        </div>
-        <div data-anim="stagger" style="--d:.44s;display:flex;flex-direction:column;gap:26px">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">TAGGING ACCURACY · 50 MANUALLY TAGGED GUIDES</div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:26px;color:#3A3552">Fuzzy string &amp; keyword matching</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:34px;color:#B5537A">70%</div></div>
-            <div style="height:34px;background:#F3E7EE"><div style="width:70%;height:100%;background:#E9AFC0"></div></div>
-            <div style="font-size:24px;color:#5A5470">Decides on surface overlap alone — collapses the Android-logo and fastboot-logo cases onto one tag.</div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:26px;color:#3A3552">LLM tagger — Qwen3-4B-Instruct, 4-bit</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:34px;color:#4F7A5D">92%</div></div>
-            <div style="height:34px;background:#E4EEE2"><div style="width:92%;height:100%;background:#8FB89A"></div></div>
-            <div style="font-size:24px;color:#5A5470">Reads context rather than matching strings — adopted for guide tagging.</div>
-          </div>
-        </div>
-      </div>
-      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>VOCABULARY &amp; TAGGING</span><span><span style="color:#4B2E83">14</span> / 48</span></div>
-    </div>
-  </div>
-</section>
-
-<section data-label="KG schema" data-screen-label="15" data-speaker-notes="Schema-first construction: four node types and four relationship types, one of them computed. Guide nodes are the hub. Stored in Neo4j and built in two phases — MERGE-based ingestion, then full recomputation of the co-occurrence edges." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
-  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:500px;height:420px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
-    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:380px;height:320px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
-    <div style="position:absolute;bottom:70px;right:80px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
-    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:30px;min-height:0">
-      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; TABLES 2.3 &amp; 2.4 · FIGURE 2.7</div></div>
-      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:#241E50">A schema-first property graph in Neo4j</h2>
-      <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center;flex:1;min-height:0">
-        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;align-items:center;gap:0">
-          <div style="display:flex;gap:20px;align-items:stretch;width:100%">
-            <div style="flex:1;background:#DCE7F5;border:1.5px solid #5C82B8;padding:18px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#2B4E7E">Symptom</div><div style="font-size:24px;color:#4A4566;margin-top:4px">tag</div></div>
-            <div style="flex:1;background:#F8DCE4;border:1.5px solid #D4728E;padding:18px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#8E3B5C">Diagnosis</div><div style="font-size:24px;color:#4A4566;margin-top:4px">tag</div></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;width:70%;padding:10px 0">
-            <div style="width:1.5px;height:40px;background:#8E7BD6"></div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6B6478;align-self:center">HAS_SYMPTOM / HAS_DIAGNOSIS</div>
-            <div style="width:1.5px;height:40px;background:#8E7BD6"></div>
-          </div>
-          <div style="background:#F4F1FC;border:1.5px solid #4B2E83;padding:22px 34px;text-align:center;width:60%"><div style="font-family:'IBM Plex Mono',monospace;font-size:25px;color:#2E1B54">Guide</div><div style="font-size:24px;color:#4A4566;margin-top:4px">id — the hub of the schema</div></div>
-          <div style="display:flex;flex-direction:column;align-items:center;padding:10px 0"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6B6478">FOR_DEVICE</div><div style="width:1.5px;height:30px;background:#8E7BD6"></div></div>
-          <div style="background:#EDF3EC;border:1.5px solid #6E9B7C;padding:18px 34px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#3E6B4C">Device</div><div style="font-size:24px;color:#4A4566;margin-top:4px">(category, model)</div></div>
-          <div style="margin-top:20px;border:1.5px dashed #8E7BD6;background:#FAF8FD;padding:16px 24px;font-size:24px;color:#3A3552;text-align:center">CO_OCCURS_WITH · Symptom → Diagnosis, computed in Phase 2 and weighted by the number of distinct guides linking the pair</div>
-        </div>
-        <div data-anim="stagger" style="--d:.44s;display:flex;flex-direction:column;gap:24px">
-          <div style="background:#F4F1FC;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B4FB5">WHY SCHEMA-FIRST</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">The diagnostic domain has recurring concepts, so fixed Symptom and Diagnosis types limit the LLM to a defined vocabulary instead of open extraction — reducing the surface-form variability that would fragment shared nodes.</div></div>
-          <div style="background:#FDF3E8;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#B8703A">PHASE 1 · INGESTION</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">One <span style="font-family:'IBM Plex Mono',monospace;font-size:24px">MERGE</span>-based transaction per record, each node keyed on a unique property — idempotent by construction, and shared symptoms converge onto single nodes.</div></div>
-          <div style="background:#EDF3EC;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#4F7A5D">PHASE 2 · AGGREGATION</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">Co-occurrence edges deleted and rebuilt in full, so re-tagged or removed guides leave no stale weights behind.</div></div>
-        </div>
-      </div>
-      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>KNOWLEDGE GRAPH SCHEMA</span><span><span style="color:#4B2E83">15</span> / 48</span></div>
     </div>
   </div>
 </section>
@@ -630,6 +611,10 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     </div>
   </div>
 </section>
+
+
+
+
 
 <!-- <section data-label="3.3 Environment" data-screen-label="20" data-speaker-notes="Implemented in Python. Transformers with accelerate and bitsandbytes for quantized inference, sentence-transformers for embeddings indexed in faiss, rank_bm25 for sparse retrieval, outlines for structured output, Neo4j for the knowledge graph. Ran on two NVIDIA T4 GPUs with 15GB each." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:56px 100px 48px;box-sizing:border-box;overflow:hidden">
