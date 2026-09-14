@@ -231,7 +231,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     <div style="position:relative;z-index:1;display:flex;align-items:center;gap:54px">
       <div data-anim="soft" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:220px;line-height:.9;letter-spacing:-.05em;color:#E08A4E">02</div>
       <div style="display:flex;flex-direction:column;gap:24px">
-        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:82px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Data Preparation and<br />Knowledge Graph</h2>
+        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:82px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Data Preparation</h2>
         <div data-anim="rule" style="--d:.2s;width:180px;height:4px;background:#8E7BD6"></div>
         <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:820px"></p>
       </div>
@@ -397,7 +397,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     </div>
   </div>
 </section>
-<section data-label="Extraction Model Comparison" data-screen-label="12" data-speaker-notes="Per-field scores for the two candidates on the thirty-video ground truth. The categorical fields are saturated — both models read category and device correctly, so they separate nothing. The gap opens on the fields that carry meaning: problem description, diagnosis, and the repair procedure, where LLaMA is ahead by nine to seventeen points. Order similarity is the one field where Mistral edges ahead, by a single point, and it is also the lowest score either model reaches — step ordering is the hardest part of the extraction. On the aggregate weighted score, 0.92 against 0.84." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<!-- <section data-label="Extraction Model Comparison" data-screen-label="12" data-speaker-notes="Per-field scores for the two candidates on the thirty-video ground truth. The categorical fields are saturated — both models read category and device correctly, so they separate nothing. The gap opens on the fields that carry meaning: problem description, diagnosis, and the repair procedure, where LLaMA is ahead by nine to seventeen points. Order similarity is the one field where Mistral edges ahead, by a single point, and it is also the lowest score either model reaches — step ordering is the hardest part of the extraction. On the aggregate weighted score, 0.92 against 0.84." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
@@ -422,6 +422,56 @@ a:hover { color: #2E1B54; text-decoration: underline; }
         </div>
       </div>
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>EXTRACTION MODEL COMPARISON</span><span><span style="color:#4B2E83">12</span> / 29</span></div>
+    </div>
+  </div>
+</section> -->
+
+<section data-label="Information Extraction: Example" data-screen-label="11" data-speaker-notes="One transcript through the pipeline. On the left, the raw transcript as it arrives: a channel greeting, the fault described in the technician's own words, teardown narration, and a sign-off asking for likes. Preprocessing drops the greeting and the sign-off; the schema-guided prompt separates what remains into fields. On the right, the record that comes out: the reported fault, its diagnosis, the required tools, and the repair procedure normalised into an ordered step list — thirty-one steps in the full record, truncated here to three. The field to note is diagnosis: for YouTube it is stated in the narration, so extraction only has to find it. For iFixit it is not there at all, which is the next slide." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:28px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 &middot; DATA &amp; KG &nbsp;&middot;&nbsp; &sect; 2.4.5 &nbsp;&middot;&nbsp; FIGURE 2.4</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Information Extraction: Example</h2>
+
+      <div style="flex:1;display:grid;grid-template-columns:1fr 160px 1.08fr;gap:0;align-items:start;min-height:0">
+
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column">
+          <div style="background:#241E50;color:#FBFAFD;padding:13px 22px;font-size:23px;font-weight:600">Raw transcript</div>
+          <div style="border:1px solid #E0D9F0;border-top:none;background:#FBFAFD;padding:22px;font-size:22px;line-height:1.55;font-style:italic;color:#3A3552">
+            <span style="color:#A9A2BC;text-decoration:line-through">&ldquo;everyone, and to howfixit.&rdquo;</span>
+            if your iPhone 17 Pro is <b style="color:#241E50;font-style:normal">stuck in a boot loop</b>, keeps <b style="color:#241E50;font-style:normal">restarting with panic logs</b>, shows <b style="color:#241E50;font-style:normal">&lsquo;no service&rsquo; or missing IMEI</b>, or is <b style="color:#241E50;font-style:normal">completely dead</b>, you&rsquo;re likely dealing with a <b style="color:#241E50;font-style:normal">logic board problem</b>.
+            <span style="color:#A9A2BC">&hellip; [tools list and full teardown narration omitted] &hellip;</span>
+            because the logic board is paired with key modules &hellip; you&rsquo;ll need to calibrate the new logic board using repair assistant.
+            <span style="color:#A9A2BC;text-decoration:line-through">&ldquo;&hellip; if you found this guide helpful, give us a thumbs up and subscribe &hellip;&rdquo;</span>
+          </div>
+        </div>
+
+        <div data-anim="fade" style="--d:.5s;align-self:center;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="display:flex;align-items:center"><div style="width:44px;height:1.5px;background:#4B2E83"></div><div style="width:0;height:0;border-left:10px solid #4B2E83;border-top:7px solid transparent;border-bottom:7px solid transparent"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;letter-spacing:.1em;color:#6B4FB5;white-space:nowrap">extraction</div>
+        </div>
+
+        <div data-anim="stagger" style="--d:.56s;display:flex;flex-direction:column">
+          <div style="background:#241E50;color:#FBFAFD;padding:13px 22px;font-size:23px;font-weight:600">Extracted structured record</div>
+          <div style="border:1px solid #E0D9F0;border-top:none;background:#FBFAFD;padding:20px 22px;font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:1.5;color:#3A3552">
+            <div><span style="color:#4B2E83">category:</span> Phone</div>
+            <div><span style="color:#4B2E83">device_model:</span> [&ldquo;iPhone 17 Pro&rdquo;]</div>
+            <div><span style="color:#4B2E83">problem_description:</span> Boot loop, panic logs,<br />&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;no service&rdquo; or missing IMEI, or completely dead</div>
+            <div style="background:#F4F0FA;margin:6px -8px;padding:6px 8px"><span style="color:#4B2E83;font-weight:500">diagnosis:</span> <span style="color:#241E50;font-weight:500">Logic board problem</span></div>
+            <div><span style="color:#4B2E83">tools_required:</span> [precision screwdriver set,<br />&nbsp;&nbsp;&nbsp;&nbsp;plastic pry tools, tweezers, suction cup,<br />&nbsp;&nbsp;&nbsp;&nbsp;adhesive sealing tape]</div>
+            <div style="margin-top:2px"><span style="color:#4B2E83">repair_steps:</span> [</div>
+            <div>&nbsp;&nbsp;1. Power off and remove the two screws near the USB-C port.</div>
+            <div>&nbsp;&nbsp;2. Heat the screen to soften the waterproof adhesive.</div>
+            <div>&nbsp;&nbsp;3. Loosen the adhesive with a suction cup and thin blade.</div>
+            <div style="color:#8A8A8A">&nbsp;&nbsp;&hellip; (31 steps total)</div>
+            <div>]</div>
+          </div>
+        </div>
+      </div>
+
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>INFORMATION EXTRACTION &mdash; WORKED EXAMPLE</span><span><span style="color:#4B2E83">11</span> / 29</span></div>
     </div>
   </div>
 </section>
@@ -1569,9 +1619,9 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     <div style="position:relative;z-index:1;display:flex;align-items:center;gap:54px">
       <div data-anim="soft" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:220px;line-height:.9;letter-spacing:-.05em;color:#D1557A">05</div>
       <div style="display:flex;flex-direction:column;gap:24px">
-        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:78px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Knowledge Graph<br />and GraphRAG</h2>
+        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:78px;line-height:1.02;letter-spacing:-.03em;color:#241E50">GraphRAG</h2>
         <div data-anim="rule" style="--d:.2s;width:180px;height:4px;background:#D1557A"></div>
-        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:900px">The second occupant &mdash; the same corpus organised as an explicit symptom&ndash;diagnosis graph, and retrieval as traversal through it.</p>
+        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:900px"></p>
       </div>
     </div>
   </div>
