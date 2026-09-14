@@ -196,7 +196,69 @@ a:hover { color: #2E1B54; text-decoration: underline; }
   </div>
 </section>
 
-<section data-label="02 Data &amp; KG" data-screen-label="07" data-speaker-notes="Second part: how the diagnostic knowledge base and the knowledge graph were built, since the knowledge we needed does not exist in ready-made form." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<section data-label="02 System Architecture" data-screen-label="05"  style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-220px;right:-160px;width:820px;height:660px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;top:-90px;right:380px;width:360px;height:300px;background:#FBEEF2;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-160px;left:-130px;width:520px;height:420px;background:#FCE6CB;border-radius:52% 48% 56% 44%/46% 54% 46% 54%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;bottom:130px;right:160px;width:140px;height:90px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:24px 24px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;display:flex;align-items:center;gap:54px">
+      <div data-anim="soft" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:220px;line-height:.9;letter-spacing:-.05em;color:#8E7BD6">02</div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:78px;line-height:1.02;letter-spacing:-.03em;color:#241E50">System Architecture</h2>
+        <div data-anim="rule" style="--d:.2s;width:180px;height:4px;background:#8E7BD6"></div>
+        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:900px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="The system at a glance" data-screen-label="06" data-speaker-notes="Before the details, the whole system on one slide. One flow: the query is processed, evidence is retrieved, the evidence is assembled into a context, and the model expresses a grounded answer. The retrieval layer is a single slot, and exactly one implementation occupies it in any given run — either Hybrid RAG or GraphRAG, never both and never merged. The system does not choose between them at runtime; the configuration under test does. Everything around that slot is held fixed — same corpus, same context assembly, same generation stage, same prompting and context budgets, same three backbones — which is what makes the comparison in the results section a controlled one. And when the evidence is insufficient the system does not answer: it asks, the answer is appended to the query, and retrieval runs again." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:56px 100px 48px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#FBEEF2;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:350px;height:300px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.75;pointer-events:none"></div>
+    <div style="position:absolute;top:52px;right:78px;width:104px;height:66px;background-image:radial-gradient(#E9AFC0 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:24px;min-height:0">
+      <header style="display:flex;flex-direction:column;gap:18px">
+        <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · SYSTEM ARCHITECTURE &nbsp;·&nbsp; § 3.2</div></div>
+        <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:58px;line-height:1.05;letter-spacing:-.02em;color:#241E50"><span style="color:#4B2E83">T</span>he System Architecture</h2>
+        <div data-anim="rule" style="--d:.16s;height:3px;background:linear-gradient(to right,#4B2E83 0,#4B2E83 110px,#E8E4F2 110px,#E8E4F2 100%)"></div>
+      </header>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;min-height:0">
+
+        <div data-anim="stagger" style="--d:.2s;display:flex;align-items:center;justify-content:space-between">
+          <div style="border:1.5px solid #1A1A1A;padding:24px 20px;font-size:25px;font-weight:500;text-align:center;width:200px;box-sizing:border-box">User query</div>
+          <div style="display:flex;align-items:center"><div style="width:44px;height:1.5px;background:#4B2E83"></div><div style="width:0;height:0;border-left:9px solid #4B2E83;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
+          <div style="border:1.5px solid #1A1A1A;padding:24px 20px;font-size:25px;font-weight:500;text-align:center;width:200px;box-sizing:border-box">Query processing</div>
+          <div style="display:flex;align-items:center"><div style="width:44px;height:1.5px;background:#4B2E83"></div><div style="width:0;height:0;border-left:9px solid #4B2E83;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
+          <div style="border:2.5px solid #4B2E83;background:#FAF8FD;padding:16px 18px 14px;width:430px;box-sizing:border-box">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:21px;letter-spacing:.16em;color:#4B2E83;text-align:center">RETRIEVAL LAYER</div>
+            <div style="display:flex;align-items:center;gap:14px;margin-top:12px">
+              <div style="flex:1;border:1.5px solid #4B2E83;background:#DCE7F2;padding:14px 8px;font-size:23px;font-weight:500;text-align:center">Hybrid RAG</div>
+              <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:1px;height:13px;background:#C9C2E8"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.14em;color:#6B4FB5">OR</div><div style="width:1px;height:13px;background:#C9C2E8"></div></div>
+              <div style="flex:1;border:1.5px solid #4B2E83;background:#EFD7DE;padding:14px 8px;font-size:23px;font-weight:500;text-align:center">GraphRAG</div>
+            </div>
+            <div style="font-size:21px;color:#6B4FB5;text-align:center;margin-top:11px"> </div>
+          </div>
+          <div style="display:flex;align-items:center"><div style="width:44px;height:1.5px;background:#4B2E83"></div><div style="width:0;height:0;border-left:9px solid #4B2E83;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
+          <div style="border:1.5px solid #1A1A1A;padding:24px 20px;font-size:25px;font-weight:500;text-align:center;width:190px;box-sizing:border-box">Context assembly</div>
+          <div style="display:flex;align-items:center"><div style="width:44px;height:1.5px;background:#4B2E83"></div><div style="width:0;height:0;border-left:9px solid #4B2E83;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
+          <div style="border:1.5px solid #4B2E83;background:#F4F0FA;padding:24px 20px;font-size:25px;font-weight:500;text-align:center;width:200px;box-sizing:border-box;color:#2E1B54">Grounded response</div>
+        </div>
+
+        <div data-anim="fade" style="--d:.62s;position:relative;height:104px">
+          <div style="position:absolute;left:425px;right:100px;top:0;bottom:58px;border:2px dashed #8E7BD6;border-top:none"></div>
+          <div style="position:absolute;left:417px;top:-11px;width:0;height:0;border-bottom:13px solid #8E7BD6;border-left:8px solid transparent;border-right:8px solid transparent"></div>
+          <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:22px;letter-spacing:.12em;color:#4B2E83;white-space:nowrap">EVIDENCE INSUFFICIENT &nbsp;&rarr;&nbsp; ASK, APPEND THE ANSWER, RETRIEVE AGAIN</div>
+        </div>
+
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>THE SYSTEM AT A GLANCE</span><span><span style="color:#4B2E83">06</span> / 31</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="03 Data &amp; KG" data-screen-label="07" data-speaker-notes="Second part: how the diagnostic knowledge base and the knowledge graph were built, since the knowledge we needed does not exist in ready-made form." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-220px;right:-160px;width:820px;height:660px;background:#FDF1E3;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;top:-90px;right:380px;width:360px;height:300px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
@@ -207,66 +269,47 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div style="display:flex;flex-direction:column;gap:24px">
         <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:82px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Data Preparation and<br />Knowledge Graph</h2>
         <div data-anim="rule" style="--d:.2s;width:180px;height:4px;background:#8E7BD6"></div>
-        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:820px">Recovering a diagnostic layer that repair documentation does not express directly — and organising it into a schema-first Neo4j graph.</p>
+        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:820px"></p>
       </div>
     </div>
   </div>
 </section>
-
-<section data-label="Data sources" data-screen-label="08" data-speaker-notes="Two complementary sources. iFixit guides are procedurally detailed but diagnostically thin: they record what was fixed, not the reasoning. YouTube tutorials narrate the diagnostic reasoning itself, but are far fewer." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
-  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:520px;height:430px;background:#FDF1E3;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
-    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:380px;height:330px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
-    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#E8BE93 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
-    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
-      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#F0A87A"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; § 2.2 DATA SOURCES</div></div>
-      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Two complementary sources</h2>
-      <div data-anim="stagger" style="--d:.2s;display:grid;grid-template-columns:1fr 1fr;gap:44px;flex:1;align-content:center">
-        <div style="background:#F4F1FC;padding:38px 40px;display:flex;flex-direction:column;gap:18px">
-          <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:34px;font-weight:600;color:#241E50">iFixit repair guides</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:46px;color:#8E7BD6">~2,300</div></div>
-          <div style="font-size:25px;line-height:1.45;color:#4A4566">Collected via the open API across manufacturers and fault categories: screen replacement, battery failure, charging-port damage, water-damage recovery.</div>
-          <div style="border-top:1px solid #DCD4F2;padding-top:16px;font-size:24px;line-height:1.45;color:#4A4566"><span style="color:#4B2E83;font-weight:600">Limitation:</span> diagnostic thinness — a guide documents what was fixed and how, not the reasoning from symptom to repair.</div>
+<section data-label="Sources &amp; schema" data-screen-label="07" data-speaker-notes="Two complementary sources. iFixit guides are procedurally detailed but diagnostically thin: they record what was fixed, not the reasoning. YouTube tutorials narrate the diagnostic reasoning itself, but are far fewer. Both are normalised into one seven-field schema so a single downstream pipeline can ingest them." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:56px 100px 48px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-120px;width:520px;height:430px;background:#FDF1E3;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.75;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:74px;width:110px;height:70px;background-image:radial-gradient(#E8BE93 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:28px;min-height:0">
+      <header style="display:flex;flex-direction:column;gap:18px">
+        <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#F0A87A"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; § 2.2 &nbsp;·&nbsp; TABLE 2.1</div></div>
+        <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:58px;line-height:1.05;letter-spacing:-.02em;color:#241E50">Data Sources</h2>
+        
+      </header>
+      <div style="flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:56px;min-height:0">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:22px">
+          <div style="background:#FDF3E8;padding:26px 30px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:30px;font-weight:600;color:#241E50">iFixit repair guides</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:40px;color:#E08A4E">~2,300</div></div>
+            <div style="font-size:24px;line-height:1.42;color:#3A3552;margin-top:10px">Collected through the open API provided by ifixit.com</div>
+            <div style="font-size:24px;line-height:1.42;color:#3A3552;margin-top:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:21px;letter-spacing:.12em;color:#B8703A">LIMITATION</span> &nbsp;diagnostic thinness &mdash; procedural information, not the knowledge behind it.</div>
+          </div>
+          <div style="background:#F4F1FC;padding:26px 30px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:30px;font-weight:600;color:#241E50">YouTube repair tutorials</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:40px;color:#6B4FB5">~300</div></div>
+            <div style="font-size:24px;line-height:1.42;color:#3A3552;margin-top:10px">Kept only when the video narrates the diagnosis: symptoms observed, alternatives ruled out, a repair path justified.</div>
+            <div style="font-size:24px;line-height:1.42;color:#3A3552;margin-top:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:21px;letter-spacing:.12em;color:#6B4FB5">STRENGTH</span> &nbsp;far fewer records, but proportionally more diagnostic reasoning in each.</div>
+          </div>
         </div>
-        <div style="background:#FDF3E8;padding:38px 40px;display:flex;flex-direction:column;gap:18px">
-          <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:34px;font-weight:600;color:#241E50">YouTube tutorials</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:46px;color:#E08A4E">~300</div></div>
-          <div style="font-size:25px;line-height:1.45;color:#4A4566">Retained only when the video contains explicit diagnostic narration: observed symptoms, competing explanations ruled out, a repair path justified.</div>
-          <div style="border-top:1px solid #F1DFC8;padding-top:16px;font-size:24px;line-height:1.45;color:#4A4566"><span style="color:#B8703A;font-weight:600">Strength:</span> smaller in volume, but proportionally more diagnostic reasoning per record.</div>
+        <div data-anim="stagger" style="--d:.42s;display:flex;flex-direction:column;gap:0;align-self:start">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:22px;letter-spacing:.16em;color:#6B6478;padding-bottom:14px;border-bottom:1.5px solid #241E50">ONE COMMON SCHEMA</div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">category</div><div style="font-size:23px;color:#4A4566">Device / repair category</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">device_model</div><div style="font-size:23px;color:#4A4566">Models the record applies to</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">problem_description</div><div style="font-size:23px;color:#4A4566">Observed symptoms, free text</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5;background:#F4F1FC"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">diagnosis</div><div style="font-size:23px;color:#241E50;font-weight:500">The identified root cause</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">tools_required</div><div style="font-size:23px;color:#4A4566">Tools for the repair</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0;border-bottom:1px solid #EDE9F5"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">repair_steps</div><div style="font-size:23px;color:#4A4566">The ordered procedure</div></div>
+          <div style="display:flex;gap:18px;padding:15px 0"><div style="font-family:'IBM Plex Mono',monospace;font-size:23px;color:#4B2E83;width:290px;flex:0 0 auto">source</div><div style="font-size:23px;color:#4A4566">Provenance — <span style="font-family:'IBM Plex Mono',monospace">ifixit</span> / <span style="font-family:'IBM Plex Mono',monospace">youtube</span></div></div>
         </div>
       </div>
-      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>DATA SOURCES</span><span><span style="color:#4B2E83">08</span> / 48</span></div>
-    </div>
-  </div>
-</section>
-
-<section data-label="Common schema" data-screen-label="09" data-speaker-notes="Both sources are normalised into one schema so the same downstream pipeline can ingest them: graph construction, symptom tagging, retrieval indexing." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
-  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
-    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FCE6CB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.7;pointer-events:none"></div>
-    <div style="position:absolute;bottom:70px;right:80px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
-    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
-      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; TABLE 2.1</div></div>
-      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">One common schema</h2>
-      <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:70px;align-items:center;flex:1;min-height:0">
-        <div data-anim="fade" style="--d:.2s;display:grid;grid-template-columns:auto 1fr;font-size:25px;border-top:2px solid #4B2E83">
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">category</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">General device / repair category (e.g. Phone)</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">device_model</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">Device model identifiers the record applies to</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">problem_description</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">Free-text description of the observed symptoms</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">diagnosis</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">The identified root cause</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">tools_required</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">Tools needed for the associated repair</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">repair_steps</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">The ordered repair procedure</div>
-          <div style="padding:15px 30px 15px 0;border-bottom:1px solid #E8E4F2;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#4B2E83">source</div><div style="padding:15px 0;border-bottom:1px solid #E8E4F2;color:#3A3552">Provenance tag (<span style="font-family:'IBM Plex Mono',monospace;font-size:24px">ifixit</span> or <span style="font-family:'IBM Plex Mono',monospace;font-size:24px">youtube</span>)</div>
-        </div>
-        <!-- <div data-anim="stagger" style="--d:.4s;display:flex;flex-direction:column;gap:0;align-items:stretch">
-          <div style="background:#F4F1FC;padding:22px 28px;font-size:26px;text-align:center;color:#241E50">iFixit guides</div>
-          <div style="display:flex;justify-content:center;padding:8px 0"><div style="width:1.5px;height:26px;background:#8E7BD6"></div></div>
-          <div style="background:#FDF3E8;padding:22px 28px;font-size:26px;text-align:center;color:#241E50">YouTube transcripts</div>
-          <div style="display:flex;justify-content:center;padding:8px 0"><div style="width:1.5px;height:26px;background:#8E7BD6"></div></div>
-          <div style="border:1.5px solid #4B2E83;padding:26px 28px;font-size:27px;text-align:center;color:#2E1B54;font-weight:500">Common schema</div>
-          <div style="display:flex;justify-content:center;padding:8px 0"><div style="width:1.5px;height:26px;background:#8E7BD6"></div></div>
-          <div style="font-size:24px;line-height:1.45;color:#4A4566;text-align:center">Graph construction · symptom tagging · retrieval indexing</div>
-        </div> -->
-      </div>
-      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>COMMON SCHEMA</span><span><span style="color:#4B2E83">09</span> / 48</span></div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>SOURCES &amp; SCHEMA</span><span><span style="color:#4B2E83">07</span> / 29</span></div>
     </div>
   </div>
 </section>
