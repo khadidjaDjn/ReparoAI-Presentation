@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Thesis Defense — An Intelligent Assistant for Fault Diagnosis</title>
+<title> ENG Presentation</title>
 
 <!-- ================= FONTS ================= -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -299,7 +299,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
   </div>
 </section>
 
-<section data-label="Data Collection and Structuring" data-screen-label="08" data-speaker-notes="The two sources are shaped nothing alike, so each takes its own route into the same structure. YouTube transcripts are read forward: the reasoning is already spoken, so information extraction structures it. iFixit guides are read backward: the diagnostic layer was never written down, so reverse engineering infers it from the repair action. Both land in the same seven-field record, which is what lets one downstream pipeline ingest them — graph construction, symptom tagging, retrieval indexing. The field that matters is diagnosis, and it is the one iFixit never states." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+<!-- <section data-label="Data Collection and Structuring" data-screen-label="08" data-speaker-notes="The two sources are shaped nothing alike, so each takes its own route into the same structure. YouTube transcripts are read forward: the reasoning is already spoken, so information extraction structures it. iFixit guides are read backward: the diagnostic layer was never written down, so reverse engineering infers it from the repair action. Both land in the same seven-field record, which is what lets one downstream pipeline ingest them — graph construction, symptom tagging, retrieval indexing. The field that matters is diagnosis, and it is the one iFixit never states." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-120px;width:500px;height:420px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;opacity:.75;pointer-events:none"></div>
@@ -343,7 +343,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>DATA COLLECTION &amp; STRUCTURING</span><span><span style="color:#4B2E83">08</span> / 29</span></div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section data-label="YouTube extraction" data-screen-label="10" data-speaker-notes="Each YouTube record starts as a video ID, title and raw transcript. Cleaning strips greetings, sponsor mentions and filler — without it, prompt length passed 5,168 tokens for a non-trivial share of videos and risked truncating the transcript itself." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
@@ -416,7 +416,7 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <div style="flex:1;display:grid;grid-template-columns:1fr 660px;gap:70px;align-items:center;min-height:0">
         <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:26px">
           <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"><b style="color:#241E50">Manually annotated  ground truth</b>.</div></div>
-          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"> <b style="color:#241E50">LLaMA-3-8B-Instruct</b> and <b style="color:#241E50">Mistral-7B-Instruct-v0.3</b>were evaluated.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"> <b style="color:#241E50">LLaMA-3-8B-Instruct</b> and <b style="color:#241E50">Mistral-7B-Instruct-v0.3</b> were evaluated for the task.</div></div>
           <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#6E9B7C;margin-top:13px;flex:0 0 auto"></div><div style="font-size:27px;line-height:1.45;color:#3A3552"><b style="color:#241E50">LLaMA-3-8B-Instruct outperformed</b> on most fields and on the weighted scoreand it was selected for the full corpus.</div></div>
         </div>
         <div data-anim="fade" style="--d:.5s;display:flex;flex-direction:column;gap:0">
@@ -1664,6 +1664,102 @@ a:hover { color: #2E1B54; text-decoration: underline; }
     </div>
   </div>
 </section>
+
+<!-- graph rag and kg -->
+ <section data-label="05 Knowledge Graph and GraphRAG" data-screen-label="16" data-speaker-notes="The second occupant &mdash; the same corpus organised as an explicit symptom&ndash;diagnosis graph, and retrieval as traversal through it." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;align-items:center;padding:0 110px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-220px;right:-160px;width:820px;height:660px;background:#FBEEF2;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;top:-90px;right:380px;width:360px;height:300px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-160px;left:-130px;width:520px;height:420px;background:#FCE6CB;border-radius:52% 48% 56% 44%/46% 54% 46% 54%;opacity:.7;pointer-events:none"></div>
+    <div style="position:absolute;bottom:130px;right:160px;width:140px;height:90px;background-image:radial-gradient(#E9AFC0 3px,transparent 3px);background-size:24px 24px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;display:flex;align-items:center;gap:54px">
+      <div data-anim="soft" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:220px;line-height:.9;letter-spacing:-.05em;color:#D1557A">05</div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <h2 data-anim style="--d:.12s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:78px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Knowledge Graph<br />and GraphRAG</h2>
+        <div data-anim="rule" style="--d:.2s;width:180px;height:4px;background:#D1557A"></div>
+        <p data-anim style="--d:.26s;margin:0;font-size:30px;line-height:1.45;color:#4A4566;max-width:900px">The second occupant &mdash; the same corpus organised as an explicit symptom&ndash;diagnosis graph, and retrieval as traversal through it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- knowlge grapgh contruction  -->
+ <section data-label="Vocabulary &amp; tagging" data-screen-label="14" data-speaker-notes="A corpus-derived vocabulary groups varied phrasings under one canonical tag, so guides describing the same fault converge onto the same node. Grouping by meaning keeps lexically similar but distinct faults apart. On 50 manually tagged guides, fuzzy matching reached 70 percent and collapsed exactly the distinctions we built the vocabulary to preserve; the LLM tagger reached 92 percent." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:500px;height:420px;background:#F8DCE4;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;opacity:.8;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:360px;height:310px;background:#EFEAFB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;right:78px;width:110px;height:70px;background-image:radial-gradient(#E9AFC0 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:34px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#E58FA5"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; § 2.6.2 — 2.6.3</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:#241E50">Canonical vocabulary and guide tagging</h2>
+      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center;flex:1;min-height:0">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:10px;flex:1">
+              <div style="background:#F4F1FC;padding:14px 20px;font-size:24px;color:#3A3552">“won't turn on”</div>
+              <div style="background:#F4F1FC;padding:14px 20px;font-size:24px;color:#3A3552">“dead phone”</div>
+            </div>
+            <div style="display:flex;align-items:center"><div style="width:36px;height:1.5px;background:#8E7BD6"></div><div style="width:0;height:0;border-left:9px solid #8E7BD6;border-top:6px solid transparent;border-bottom:6px solid transparent"></div></div>
+            <div style="border:1.5px solid #4B2E83;padding:18px 24px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#2E1B54">wont_turn_on</div>
+          </div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Tags are derived from the data: distinct phrases counted, grouped by semantic similarity, one canonical label per group — then reviewed by an LLM under human supervision.</div></div>
+          <div style="display:flex;gap:20px"><div style="width:9px;height:9px;background:#8E7BD6;margin-top:13px;flex:0 0 auto"></div><div style="font-size:26px;line-height:1.45;color:#3A3552">Grouping by meaning keeps distinct faults apart: “stuck on the Android logo” (recovery hang) stays separate from “stuck on the fastboot logo” (bootloader failure).</div></div>
+        </div>
+        <div data-anim="stagger" style="--d:.44s;display:flex;flex-direction:column;gap:26px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">TAGGING ACCURACY · 50 MANUALLY TAGGED GUIDES</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:26px;color:#3A3552">Fuzzy string &amp; keyword matching</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:34px;color:#B5537A">70%</div></div>
+            <div style="height:34px;background:#F3E7EE"><div style="width:70%;height:100%;background:#E9AFC0"></div></div>
+            <div style="font-size:24px;color:#5A5470">Decides on surface overlap alone — collapses the Android-logo and fastboot-logo cases onto one tag.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-size:26px;color:#3A3552">LLM tagger — Qwen3-4B-Instruct, 4-bit</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:34px;color:#4F7A5D">92%</div></div>
+            <div style="height:34px;background:#E4EEE2"><div style="width:92%;height:100%;background:#8FB89A"></div></div>
+            <div style="font-size:24px;color:#5A5470">Reads context rather than matching strings — adopted for guide tagging.</div>
+          </div>
+        </div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>VOCABULARY &amp; TAGGING</span><span><span style="color:#4B2E83">14</span> / 48</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="KG schema" data-screen-label="15" data-speaker-notes="Schema-first construction: four node types and four relationship types, one of them computed. Guide nodes are the hub. Stored in Neo4j and built in two phases — MERGE-based ingestion, then full recomputation of the co-occurrence edges." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:60px 100px 52px;box-sizing:border-box;overflow:hidden">
+    <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:500px;height:420px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="blob" style="position:absolute;bottom:-150px;left:-120px;width:380px;height:320px;background:#FDF1E3;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
+    <div style="position:absolute;bottom:70px;right:80px;width:110px;height:70px;background-image:radial-gradient(#B7ADE3 3px,transparent 3px);background-size:23px 23px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:30px;min-height:0">
+      <div data-anim style="display:flex;align-items:center;gap:14px"><div style="width:5px;height:28px;background:#8E7BD6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.16em;color:#6B6478">02 · DATA &amp; KG &nbsp;·&nbsp; TABLES 2.3 &amp; 2.4 · FIGURE 2.7</div></div>
+      <h2 data-anim="soft" style="--d:.08s;margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:#241E50">A schema-first property graph in Neo4j</h2>
+      <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center;flex:1;min-height:0">
+        <div data-anim="stagger" style="--d:.2s;display:flex;flex-direction:column;align-items:center;gap:0">
+          <div style="display:flex;gap:20px;align-items:stretch;width:100%">
+            <div style="flex:1;background:#DCE7F5;border:1.5px solid #5C82B8;padding:18px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#2B4E7E">Symptom</div><div style="font-size:24px;color:#4A4566;margin-top:4px">tag</div></div>
+            <div style="flex:1;background:#F8DCE4;border:1.5px solid #D4728E;padding:18px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#8E3B5C">Diagnosis</div><div style="font-size:24px;color:#4A4566;margin-top:4px">tag</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;width:70%;padding:10px 0">
+            <div style="width:1.5px;height:40px;background:#8E7BD6"></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6B6478;align-self:center">HAS_SYMPTOM / HAS_DIAGNOSIS</div>
+            <div style="width:1.5px;height:40px;background:#8E7BD6"></div>
+          </div>
+          <div style="background:#F4F1FC;border:1.5px solid #4B2E83;padding:22px 34px;text-align:center;width:60%"><div style="font-family:'IBM Plex Mono',monospace;font-size:25px;color:#2E1B54">Guide</div><div style="font-size:24px;color:#4A4566;margin-top:4px">id — the hub of the schema</div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding:10px 0"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6B6478">FOR_DEVICE</div><div style="width:1.5px;height:30px;background:#8E7BD6"></div></div>
+          <div style="background:#EDF3EC;border:1.5px solid #6E9B7C;padding:18px 34px;text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;color:#3E6B4C">Device</div><div style="font-size:24px;color:#4A4566;margin-top:4px">(category, model)</div></div>
+          <div style="margin-top:20px;border:1.5px dashed #8E7BD6;background:#FAF8FD;padding:16px 24px;font-size:24px;color:#3A3552;text-align:center">CO_OCCURS_WITH · Symptom → Diagnosis, computed in Phase 2 and weighted by the number of distinct guides linking the pair</div>
+        </div>
+        <div data-anim="stagger" style="--d:.44s;display:flex;flex-direction:column;gap:24px">
+          <div style="background:#F4F1FC;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B4FB5">WHY SCHEMA-FIRST</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">The diagnostic domain has recurring concepts, so fixed Symptom and Diagnosis types limit the LLM to a defined vocabulary instead of open extraction — reducing the surface-form variability that would fragment shared nodes.</div></div>
+          <div style="background:#FDF3E8;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#B8703A">PHASE 1 · INGESTION</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">One <span style="font-family:'IBM Plex Mono',monospace;font-size:24px">MERGE</span>-based transaction per record, each node keyed on a unique property — idempotent by construction, and shared symptoms converge onto single nodes.</div></div>
+          <div style="background:#EDF3EC;padding:26px 30px"><div style="font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#4F7A5D">PHASE 2 · AGGREGATION</div><div style="font-size:25px;line-height:1.45;color:#3A3552;margin-top:10px">Co-occurrence edges deleted and rebuilt in full, so re-tagged or removed guides leave no stale weights behind.</div></div>
+        </div>
+      </div>
+      <div data-anim="fade" style="--d:.8s;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #E8E4F2;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:.14em;color:#6B6478"><span>KNOWLEDGE GRAPH SCHEMA</span><span><span style="color:#4B2E83">15</span> / 48</span></div>
+    </div>
+  </div>
+</section>
+
+
 <section data-label="3.5 GraphRAG" data-screen-label="26" data-speaker-notes="The second strategy retrieves through the knowledge graph rather than the document collection. The graph is enriched with guide-level context at build time; at query time the input is linked to canonical symptoms, traversed to guides and diagnoses, and the candidates are ranked. A co-occurrence-only variant is retained as a baseline." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:56px 100px 48px;box-sizing:border-box;overflow:hidden">
     <div data-anim="blob" style="position:absolute;top:-170px;right:-110px;width:480px;height:400px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
