@@ -71,7 +71,12 @@ a:hover { color: #2E1B54; text-decoration: underline; }
 
 <section data-label="Title" data-screen-label="01" data-speaker-notes="Good morning. Our thesis presents an intelligent fault-diagnosis assistant for consumer electronics: it takes a textual fault description and returns a grounded diagnosis with repair steps." style="background:#FBFAFD;color:#191833;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;display:flex">
   <div style="position:relative;flex:1;display:flex;box-sizing:border-box;overflow:hidden">
-    <div data-anim="blob" style="position:absolute;top:-200px;right:-140px;width:760px;height:620px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
+    <div data-anim="fade" style="position:absolute;top:56px;left:110px;z-index:2;display:flex;align-items:center;gap:26px">
+      <img src="estin-logo.png" alt="ESTIN" style="height:72px;width:auto;display:block" />
+      <div style="width:1px;height:52px;background:#D8D2E8"></div>
+      <img src="iris-logo.png" alt="IRIS" style="height:72px;width:auto;display:block" />
+    </div>
+        <div data-anim="blob" style="position:absolute;top:-200px;right:-140px;width:760px;height:620px;background:#EFEAFB;border-radius:56% 44% 48% 52%/54% 58% 42% 46%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;top:-130px;right:280px;width:420px;height:340px;background:#FCE6CB;border-radius:50% 50% 44% 56%/58% 42% 58% 42%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-170px;left:-140px;width:540px;height:440px;background:#F0EBFA;border-radius:52% 48% 56% 44%/46% 54% 46% 54%;pointer-events:none"></div>
     <div data-anim="blob" style="position:absolute;bottom:-90px;left:210px;width:260px;height:210px;background:#F8DCE4;border-radius:50%;opacity:.8;pointer-events:none"></div>
@@ -2128,6 +2133,11 @@ a:hover { color: #2E1B54; text-decoration: underline; }
       <h2 data-anim="soft" style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:104px;line-height:1.02;letter-spacing:-.03em;color:#241E50">Thank you</h2>
       <div data-anim="rule" style="--d:.16s;width:200px;height:4px;background:#F0A87A"></div>
       <p data-anim style="--d:.24s;margin:0;font-size:32px;line-height:1.45;color:#4A4566;max-width:900px">We would be glad to answer your questions.</p>
+      <div data-anim="fade" style="--d:.4s;display:flex;align-items:center;gap:30px;margin-top:14px">
+        <img src="estin-logo.png" alt="ESTIN" style="height:64px;width:auto;display:block" />
+        <div style="width:1px;height:46px;background:#D8D2E8"></div>
+        <img src="iris-logo.png" alt="IRIS" style="height:64px;width:auto;display:block" />
+      </div>
       
     </div>
   </div>
@@ -6283,5 +6293,48 @@ a:hover { color: #2E1B54; text-decoration: underline; }
 
 </script>
 
+
+<!-- ================= PRESENTER POINTER =================
+     A coloured spotlight dot follows the cursor so the audience
+     can see exactly what you are pointing at.
+       L  toggle the pointer on / off
+       C  cycle its colour (coral / violet / pink)
+     ====================================================== -->
+<script>
+(function(){
+  var colors = ['#F0A87A', '#8E7BD6', '#D1557A'];
+  var ci = 0, on = true, hideT = null;
+
+  var dot = document.createElement('div');
+  dot.style.cssText = 'position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;'
+    + 'border-radius:50%;pointer-events:none;z-index:2147483647;opacity:0;'
+    + 'transition:opacity .18s ease;will-change:transform';
+  function paint(){
+    var c = colors[ci];
+    dot.style.background = c;
+    dot.style.boxShadow = '0 0 0 5px ' + c + '4D, 0 0 16px 6px ' + c + '38';
+  }
+  paint();
+  document.body.appendChild(dot);
+
+  function show(){
+    if(!on) return;
+    dot.style.opacity = '1';
+    clearTimeout(hideT);
+    hideT = setTimeout(function(){ dot.style.opacity = '0'; }, 2600);
+  }
+  window.addEventListener('mousemove', function(e){
+    dot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+    show();
+  }, {passive:true});
+
+  window.addEventListener('keydown', function(e){
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if(k === 'l'){ on = !on; if(!on){ clearTimeout(hideT); dot.style.opacity = '0'; } else show(); }
+    if(k === 'c'){ ci = (ci + 1) % colors.length; paint(); show(); }
+  });
+})();
+</script>
 </body>
 </html>
